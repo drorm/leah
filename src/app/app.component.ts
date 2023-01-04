@@ -8,8 +8,5 @@ import Artyom from 'artyom.js/build/artyom.js';
 })
 export class AppComponent {
   title = 'Leah: Language Educator And Helper';
-  artyom = new Artyom();
-  constructor() {
-    this.artyom.say('Hello World');
-  }
+  constructor() {}
 }
