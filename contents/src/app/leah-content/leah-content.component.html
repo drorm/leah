@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-toolbar color="warn" id="toolbar">
+    <mat-toolbar-row class="media-action-bar">
+      <button mat-button (click)="run()" *ngIf="!running">
+        <mat-icon mat-list-icon>play_arrow</mat-icon>
+      </button>
+      <button mat-button (click)="run()" *ngIf="running">
+        <mat-icon mat-list-icon>pause</mat-icon>
+      </button>
+      <button mat-button>
+        <mat-icon mat-list-icon>skip_next</mat-icon>
+      </button>
+      <button mat-button>
+        <mat-icon mat-list-icon>settings</mat-icon>
+      </button>
+      <button mat-button>
+        <mat-icon mat-list-icon>help</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
