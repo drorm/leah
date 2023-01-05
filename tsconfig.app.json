@@ -3,8 +3,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "allowSyntheticDefaultImports": true,
     "types": ["chrome"]
   },
-  "files": ["src/main.ts", "src/background.ts"],
+  "files": ["src/main.ts", "src/background.ts", "src/content.ts"],
   "include": ["src/**/*.d.ts"]
 }
