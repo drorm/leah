@@ -8,6 +8,19 @@
     "service_worker": "background.js",
     "type": "module"
   },
+  "content_scripts": [
+    {
+      "matches": ["https://cdbfly.org/*"],
+      "js": ["content.js"],
+      "css": ["leah-styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["leah-content.js"],
+      "matches": ["https://cdbfly.org/*"]
+    }
+  ],
   "action": {
     "default_popup": "index.html"
   }
