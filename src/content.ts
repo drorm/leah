@@ -1,52 +1,38 @@
-const log = console.log;
+/*
+ * this is a content script to initialize content on the web page.
+ * The only thing we do is the equivalent of the following:
+ * <head>
+ *   <link rel="stylesheet" href="leah-styles.css" />
+ * </head>
+ *
+ *  <body>
+ *    <custom-root> </custom-root>
+ *    <leah-content></leah-content>
+ *    <script src="leah-content.js"></script>
+ *  </body>
+ * which will load the content Angular essentials app
+ */
 
-if (!('webkitSpeechRecognition' in window)) {
-  alert('no webkitSpeechRecognition');
-} else {
-  let recognizing: boolean;
-  let ignore_onend: boolean;
-  try {
-    var recognition = new window.webkitSpeechRecognition();
-    recognition.onstart = function () {
-      recognizing = true;
-      log('info_speak_now');
-    };
-
-    recognition.onerror = function (event: any) {
-      if (event.error == 'no-speech') {
-        log('info_no_speech');
-        ignore_onend = true;
-      }
-      if (event.error == 'audio-capture') {
-        log('info_no_microphone');
-        ignore_onend = true;
-      }
-      if (event.error == 'not-allowed') {
-        log('info_denied');
-        ignore_onend = true;
-      }
-    };
-    recognition.onresult = function (event: any) {
-      let final_transcript = '';
-      let interim_transcript = '';
-      if (typeof event.results == 'undefined') {
-        recognition.onend = null;
-        recognition.stop();
-        return;
-      }
-      for (var i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          final_transcript += event.results[i][0].transcript;
-        } else {
-          interim_transcript += event.results[i][0].transcript;
-        }
-      }
-      log('final', final_transcript);
-      log('interim', interim_transcript);
-    };
-    recognition.start();
-  } catch (e: any) {
-    console.log(e);
-    console.log(e.prototype.stack);
-  }
+// Inject the script into the page
+let scr = document.createElement('script');
+scr.type = 'text/javascript';
+scr.src = chrome.runtime.getURL('leah-content.js');
+try {
+  (document.head || document.documentElement).appendChild(scr);
+} catch (e) {
+  console.log(e);
 }
+
+// Inject the CSS into the page
+var link = document.createElement('link');
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = 'leah-styles.css';
+document.head.appendChild(link);
+const html3 = `
+    <custom-root> Custom</custom-root>
+    <leah-content>leah</leah-content>
+`;
+const div = document.createElement('div');
+div.innerHTML = html3;
+document.body.insertBefore(div, document.body.firstChild);
