@@ -1,12 +1,18 @@
+console.log('service worker');
+/*
 chrome.runtime.onInstalled.addListener(() => {
+  console.log('add listener');
+  chrome.storage.sync.set({ color: '#3aa757' });
   chrome.webNavigation.onCompleted.addListener(
     () => {
       chrome.tabs.query({ active: true, currentWindow: true }, ([{ id }]) => {
         if (id) {
-          chrome.pageAction.show(id);
+          console.log('found id');
+          chrome.action.disable(id);
         }
       });
     },
-    { url: [{ urlMatches: "google.com" }] }
+    { url: [{ hostContains: 'google.com' }] }
   );
 });
+*/
