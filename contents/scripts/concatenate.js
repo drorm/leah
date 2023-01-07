@@ -11,4 +11,6 @@ const targetDir = "../dist";
   const files = ["./dist/runtime.js", "./dist/polyfills.js", "./dist/main.js"];
   await concat(files, `${targetDir}/leah-content.js`);
   await fs.copyFile("./dist/styles.css", `${targetDir}/leah-styles.css`);
+  await fs.copyFile("./dist/main.js.map", `${targetDir}/main.js.map`);
+  await fs.copyFile("./dist/polyfills.js.map", `${targetDir}/polyfills.js.map`);
 })();
