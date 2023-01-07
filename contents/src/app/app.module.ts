@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 import { createCustomElement } from '@angular/elements';
 
@@ -22,6 +25,10 @@ import { LeahContentComponent } from './leah-content/leah-content.component';
     MatIconModule,
     MatSliderModule,
     MatGridListModule,
+    DragDropModule,
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.INFO,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
