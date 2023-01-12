@@ -10,15 +10,18 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://cdbfly.org/*"],
-      "js": ["content.js"],
-      "css": ["leah-styles.css"]
+      "matches": ["https://chat.openai.com/chat", "https://cdbfly.org/*"],
+      "js": ["content.js"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["leah-content.js"],
-      "matches": ["https://cdbfly.org/*"]
+      "resources": [
+        "leah-content.js",
+        "leah-styles.css",
+        "leah-content.js.map"
+      ],
+      "matches": ["https://chat.openai.com/*", "https://cdbfly.org/*"]
     }
   ],
   "action": {
