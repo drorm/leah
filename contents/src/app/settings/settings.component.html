@@ -1,0 +1,105 @@
+<mat-dialog-content class="mat-typography">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Settings</h1>
+      </div>
+
+      <div class="col-md-6 group">
+        <h2>Reading</h2>
+
+        <div class="icon-form-field"></div>
+        <div class="icon-form-field">
+          <mat-form-field>
+            <mat-select
+              placeholder="Reading Speed"
+              (selectionChange)="onSpeedSelect($event)"
+            >
+              <mat-option *ngFor="let speed of speeds" [value]="speed.value">
+                {{speed.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="Speed of reading the book"
+          ></mat-icon>
+        </div>
+
+        <div class="icon-form-field">
+          <mat-form-field>
+            <mat-select
+              placeholder="Highlight read word"
+              (selectionChange)="onHiliteSelect($event)"
+            >
+              <mat-option *ngFor="let hilite of hilites" [value]="hilite.value">
+                {{hilite.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="Highlight method while reading "
+          ></mat-icon>
+        </div>
+
+        <div class="icon-form-field">
+          <mat-icon
+            fontSet="fa"
+            fontIcon="fa-lightbulb"
+            color="accent"
+          ></mat-icon>
+          <mat-label>Auto-read Books </mat-label>
+          <mat-slide-toggle
+            [checked]="settings.autoReadBook"
+            (change)="onAutoReadBook($event)"
+          >
+          </mat-slide-toggle>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="Turn off when you want to read to the child"
+          ></mat-icon>
+        </div>
+      </div>
+
+      <div class="col-md-6 group">
+        <h2>Other</h2>
+        <div class="icon-form-field">
+          <mat-icon
+            fontSet="fa"
+            fontIcon="fa-lightbulb"
+            color="accent"
+          ></mat-icon>
+          <mat-label>Classroom Mode </mat-label>
+          <mat-slide-toggle
+            [checked]="settings.classroomMode"
+            (change)="onClassroomModeToggle($event)"
+          >
+          </mat-slide-toggle>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="When using in a classroom"
+          ></mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="docs-footer">
+    <div class="raised-row">
+      <button mat-raised-button color="primary" (click)="done()">Done</button>
+    </div>
+  </footer>
+</mat-dialog-content>

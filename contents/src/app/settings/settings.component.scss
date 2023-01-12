@@ -1,0 +1,21 @@
+.docs-footer {
+  padding: 12px;
+  font-size: 9;
+  margin-top: 40px;
+  text-align: center;
+}
+/* Text in a tooltip */
+.infoText {
+    font-size: 0.8vw;
+  }
+
+/* Info icon */
+.info {
+  font-size: 1.3vw;
+  padding-left: .6vw;
+}
+@media screen and (max-width: 884px){
+  .docs-footer-list {
+    flex-direction: column;
+  }
+}
