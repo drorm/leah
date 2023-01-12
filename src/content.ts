@@ -27,7 +27,7 @@ try {
 var link = document.createElement('link');
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = 'leah-styles.css';
+link.href = chrome.runtime.getURL('leah-styles.css');
 document.head.appendChild(link);
 const html3 = `
     <custom-root> Custom</custom-root>
