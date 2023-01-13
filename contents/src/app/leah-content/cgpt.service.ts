@@ -39,9 +39,9 @@ export class CgptService {
     }
     for (let ii = 0; ii < 5; ii++) {
       const textareas = $('textarea');
-      this.logger.info('textarea', textareas.length);
+      this.logger.debug('textarea', textareas.length);
       if (textareas.length > 0) {
-        this.logger.info('found the textarea');
+        this.logger.debug('found the textarea');
         this.textarea = textareas[0];
         return;
       }
@@ -56,16 +56,13 @@ export class CgptService {
   async sendMessage(message: string) {
     await this.getTextArea();
     // Send the message
-    await this.sleep(1000);
     $('textarea.m-0').val(message);
-    /*
     const submit = await $('textarea ~ button:enabled');
     if (submit) {
       this.logger.info('found submit');
       submit.click();
     }
     return submit;
-   */
   }
 
   /**
@@ -77,18 +74,17 @@ export class CgptService {
     this.logger.info('waiting for submit');
     await this.sleep(1000);
     // limit the number of tries so we're not stuck in this loop
-    for (let ii = 0; ii < 200; ii++) {
+    for (let ii = 0; ii < 100; ii++) {
       submit = await $('textarea ~ button:enabled');
       if (submit.length > 0) {
         this.logger.info('got submit');
         const pageElements = $("div[class*='text-base']").toArray();
         const numElements = pageElements.length;
         // first let's find the new element
-        console.log('totalMessages', this.totalMessages);
+        this.logger.debug('totalMessages', this.totalMessages);
         if (numElements > this.totalMessages) {
-          console.log('found one');
           const response = pageElements.pop();
-          console.log('response', response);
+          this.logger.debug(`found an element: ${response}`);
           if (response) {
             this.totalMessages = pageElements.length;
             text = response.innerText;
@@ -98,7 +94,7 @@ export class CgptService {
         }
       }
       this.logger.info('no submit sleeping');
-      await this.sleep(500);
+      await this.sleep(1000);
     }
     return ''; // Didn't get a response
   }
