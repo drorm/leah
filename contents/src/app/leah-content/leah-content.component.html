@@ -1,16 +1,24 @@
 <div class="container">
-  <mat-toolbar color="warn" id="toolbar">
+  <mat-toolbar color="primary" id="toolbar">
     <mat-toolbar-row class="media-action-bar">
-      <button mat-button (click)="run()" *ngIf="!running">
+      <button mat-button (click)="run()" *ngIf="!talking">
         <mat-icon mat-list-icon>play_arrow</mat-icon>
       </button>
-      <button mat-button (click)="run()" *ngIf="running">
+      <button mat-button (click)="run()" *ngIf="talking">
         <mat-icon mat-list-icon>pause</mat-icon>
       </button>
-      <button mat-button>
-        <mat-icon mat-list-icon>skip_next</mat-icon>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="start()"
+        *ngIf="!listening"
+      >
+        <mat-icon mat-list-icon>mic_off</mat-icon>
       </button>
-      <button mat-button>
+      <button mat-button (click)="stop()" *ngIf="listening">
+        <mat-icon mat-list-icon>mic</mat-icon>
+      </button>
+      <button mat-button (click)="settings()">
         <mat-icon mat-list-icon>settings</mat-icon>
       </button>
       <button mat-button>
