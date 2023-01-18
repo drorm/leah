@@ -32,8 +32,13 @@ type SpeechRecognitionErrorCode =
 export class VoiceService {
   private recognition: any;
   private voices: any;
+  // private TTS: SpeechSynthesis;
 
-  constructor(private logger: NGXLogger, private utilService: UtilService) {}
+  constructor(
+    private logger: NGXLogger,
+    private settings: SettingsService,
+    private utilService: UtilService
+  ) {}
 
   init(language: string, country: string) {
     this.logger.info('init VoiceService');
