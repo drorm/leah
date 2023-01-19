@@ -32,6 +32,7 @@ type SpeechRecognitionErrorCode =
 export class VoiceService {
   private recognition: any;
   private voices: any;
+  private done = false;
   // private TTS: SpeechSynthesis;
 
   constructor(
@@ -49,8 +50,9 @@ export class VoiceService {
       this.recognition.interimResults = true;
       this.recognition.maxAlternatives = 1;
       this.recognition.continuous = true;
+      this.done = false;
     } else {
-      console.log('Speech recognition not supported in this browser');
+      this.logger.info('Speech recognition not supported in this browser');
     }
   }
 
@@ -61,21 +63,26 @@ export class VoiceService {
     let speaking = false;
 
     return new Promise(async (resolve, reject) => {
+      const that = this;
       if (this.recognition) {
         this.recognition.onend = (event: SpeechRecognitionEvent) => {
-          console.log('recognition.onend');
-          console.log(fullTranscript);
+          this.done = true;
+          that.logger.info('recognition.onend');
+          that.logger.info(fullTranscript);
           resolve(fullTranscript);
         };
 
         this.recognition.onresult = (event: SpeechRecognitionEvent) => {
           speechStarted = true;
           const results = event.results;
-          this.logger.debug('results', event.results);
+          that.logger.debug('results', event.results);
           for (let ii = event.resultIndex; ii < event.results.length; ++ii) {
+            if (that.done) {
+              break;
+            }
             if (event.results[ii].isFinal) {
               fullTranscript += event.results[ii][0].transcript;
-              console.log('onresult fullTranscript', fullTranscript);
+              that.logger.info('onresult fullTranscript', fullTranscript);
               speaking = false;
             } else {
               speaking = true;
@@ -86,32 +93,33 @@ export class VoiceService {
         this.recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
           switch (event.error) {
             case 'not-allowed':
-              console.log('Permission to use microphone was denied');
+              that.logger.info('Permission to use microphone was denied');
               reject('Permission to use microphone was denied');
               break;
             case 'service-not-allowed':
-              console.log('Microphone is not available');
+              that.logger.info('Microphone is not available');
               reject('Microphone is not available');
               break;
             case 'no-speech':
-              console.log('No speech was detected, try again');
+              that.logger.info('No speech was detected, try again');
               reject('No speech was detected, try again');
               break;
             default:
-              console.log('An error occurred: ' + event.error);
+              that.logger.info('An error occurred: ' + event.error);
               reject('An error occurred: ' + event.error);
               break;
           }
         };
         this.recognition.start();
+        this.logger.info(`starting recognition`);
         for (let ii = 0; ii < SettingsService.LISTEN_TIMEOUT; ii++) {
           if (!speechStarted || speaking) {
             // Wait till they've started to speak
             await UtilService.sleep(500); // keep checking
             ii = 0;
           }
-          console.log(`ii: ${ii}`);
-          console.log(`fullTranscript: ${fullTranscript}`);
+          that.logger.info(`ii: ${ii}`);
+          that.logger.info(`fullTranscript: ${fullTranscript}`);
           await UtilService.sleep(1000); // keep checking
         }
         this.stop();

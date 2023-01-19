@@ -17,8 +17,9 @@ import { MatDialog } from '@angular/material/dialog';
  *
  */
 export class LeahContentComponent {
+  speaking = false;
   listening = false;
-  conversing = true;
+  conversing = false;
   dictation: any; // Current dictation
 
   constructor(
@@ -30,10 +31,10 @@ export class LeahContentComponent {
     public dialog: MatDialog
   ) {
     this.init();
-    this.logger.info('init');
   }
 
   async init() {
+    this.logger.info('init');
     await this.speechService.init('en', 'us');
     await this.gptPage.init();
     await UtilService.sleep(250);
@@ -41,42 +42,45 @@ export class LeahContentComponent {
 
   async converse() {
     while (this.conversing) {
-      console.log('========== new conversation');
+      this.logger.info('========== new conversation');
       this.voiceService.init('English', 'US');
+      this.listening = true;
       const request = await this.voiceService.fetch();
+      this.listening = false;
       this.logger.info('speech:', request);
-      //const request: any = await this.listen();
-      //console.log('request', request);
       if (request) {
-        console.log('========== start handleRequest');
+        this.logger.info('========== start handleRequest');
         await this.handleRequest(request);
-        console.log('========== end handleRequest');
       }
       await UtilService.sleep(1000);
-      console.log('========== end conversation');
     }
   }
 
   async handleRequest(request: string) {
     await this.gptPage.sendMessage(request);
     const response = await this.gptPage.getMessage();
-    console.log('response', response);
+    this.logger.info('response', response);
     if (response) {
-      await this.speechService.speak(response);
+      await this.speak(response);
     }
-    console.log('done speaking', response);
+    this.logger.info('done speaking', response);
   }
 
   ngAfterViewInit() {}
 
+  async speak(text: string) {
+    this.speaking = true;
+    await this.speechService.speak(text);
+    this.speaking = false;
+  }
+
   async run() {
-    if (!this.conversing) {
-      await this.speechService.speak('hello');
-      this.conversing = true;
+    const paragraph = 'Hello';
+    if (!this.speaking) {
+      await this.speak(paragraph);
     } else {
-      await this.speechService.speak('goodbye');
       await this.speechService.stop();
-      this.conversing = false;
+      await this.speak('goodbye');
     }
   }
 
@@ -87,10 +91,8 @@ export class LeahContentComponent {
 
   async stop() {
     this.conversing = false;
-    await this.speechService.speak('goodbye');
+    await this.speak('goodbye');
     await this.speechService.stop();
-    this.conversing = false;
-    this.listening = false;
   }
 
   settings() {
