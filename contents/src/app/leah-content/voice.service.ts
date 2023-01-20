@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { UtilService } from './util.service';
+import { SettingsService } from '../settings/settings.service';
 
 /**
  * SpeechService provides a simple way to use the SpeechSynthesis capability provided in modern browsers.
@@ -35,15 +36,23 @@ export class VoiceService {
   private recognition: any;
   private voices: any;
   private done = false;
+  private retries = 2; // retry 2 more times if speech is not detected. Each try is around 8 seconds
 
-  constructor(private logger: NGXLogger, private utilService: UtilService) {}
+  constructor(
+    private logger: NGXLogger,
+    private utilService: UtilService,
+    private settingsService: SettingsService
+  ) {}
 
   init(language: string, country: string) {
     this.logger.debug('init VoiceService');
     if ('webkitSpeechRecognition' in window) {
       this.logger.debug('got  webkitSpeechRecognition');
       this.recognition = new webkitSpeechRecognition();
-      this.recognition.lang = language + '-' + country; //TODO
+      const userListenLang = this.settingsService.userSettings.listenLang;
+      this.logger.debug(userListenLang);
+      this.recognition.lang = userListenLang;
+      // this.recognition.lang = language + '-' + country; //TODO
       this.recognition.interimResults = true;
       this.recognition.maxAlternatives = 1;
       this.recognition.continuous = true;
@@ -98,7 +107,13 @@ export class VoiceService {
               break;
             case 'no-speech':
               that.logger.error('No speech was detected, try again');
-              reject('No speech was detected, try again');
+              if (that.retries > 0) {
+                //We keep trying until we reach the limit
+                that.logger.debug(`Try #${that.retries}`);
+                that.retries--;
+              } else {
+                reject('No speech was detected, try again');
+              }
               break;
             default:
               that.logger.error('An error occurred: ' + event.error);
