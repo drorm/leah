@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { UtilService } from './util.service';
-import { SettingsService } from './settings.service';
 
 declare var webkitSpeechRecognition: any;
 
@@ -33,13 +32,8 @@ export class VoiceService {
   private recognition: any;
   private voices: any;
   private done = false;
-  // private TTS: SpeechSynthesis;
 
-  constructor(
-    private logger: NGXLogger,
-    private settings: SettingsService,
-    private utilService: UtilService
-  ) {}
+  constructor(private logger: NGXLogger, private utilService: UtilService) {}
 
   init(language: string, country: string) {
     this.logger.info('init VoiceService');
@@ -112,7 +106,7 @@ export class VoiceService {
         };
         this.recognition.start();
         this.logger.info(`starting recognition`);
-        for (let ii = 0; ii < SettingsService.LISTEN_TIMEOUT; ii++) {
+        for (let ii = 0; ii < UtilService.LISTEN_TIMEOUT; ii++) {
           if (!speechStarted || speaking) {
             // Wait till they've started to speak
             await UtilService.sleep(500); // keep checking

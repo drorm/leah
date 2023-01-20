@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UtilService {
+ public static LISTEN_TIMEOUT = 3; // Number of seconds of silence before we respond
   constructor() {}
 
   static sleep(ms: number) {
