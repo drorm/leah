@@ -21,6 +21,7 @@ export class SettingsService {
     level: 5,
     appMode: 'parent_mode',
     language: 'en',
+    voice: 'en-us',
     classroomMode: false,
   };
 
@@ -37,7 +38,7 @@ export class SettingsService {
    */
   load() {
     const settings = this.storage.retrieve(SETTINGS);
-    this.logger.debug('default settings:', this.userSettings);
+    this.logger.info('default settings:', this.userSettings);
     if (settings) {
       // if thre're settings in localStorage - use them
       if (settings) {
@@ -51,6 +52,7 @@ export class SettingsService {
             value = this.userSettings[key]; // Set it to the default
           }
         }
+        this.logger.info('new settings:', this.userSettings);
         this.userSettings = settings;
       }
     }

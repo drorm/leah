@@ -1,5 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import * as version from '../version';
 import { SettingsService } from './settings.service';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
@@ -26,6 +30,16 @@ export class SettingsComponent implements OnInit {
     { value: 2.0, label: '2.0 -- fastest' },
   ];
 
+  voices: SpeechSynthesisVoice[] = [
+    {
+      default: false,
+      lang: 'es-ES',
+      localService: false,
+      name: 'Google US English',
+      voiceURI: 'Google US English',
+    },
+  ];
+
   hilites = [
     { value: 'yellow', label: 'Yellow background' },
     { value: 'redFont', label: 'Red Font' },
@@ -34,8 +48,12 @@ export class SettingsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SettingsComponent>,
     private settingsService: SettingsService,
-    private logger: NGXLogger
-  ) {}
+    private logger: NGXLogger,
+    @Inject(MAT_DIALOG_DATA) public data: SpeechSynthesisVoice[]
+  ) {
+    this.logger.info(data);
+    this.voices = data;
+  }
 
   onElementsAnimationsToggle(event: any) {}
 
@@ -55,6 +73,10 @@ export class SettingsComponent implements OnInit {
 
   onSpeedSelect(event: any) {
     this.settingsService.setUserSetting('speed', event.value);
+  }
+
+  onVoiceSelect(event: any) {
+    this.settingsService.setUserSetting('voice', event.value);
   }
 
   onHiliteSelect(event: any) {

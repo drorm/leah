@@ -5,6 +5,7 @@ import { SpeechService } from './speech.service';
 import { UtilService } from './util.service';
 import { NGXLogger } from 'ngx-logger';
 import { SettingsComponent } from '../settings/settings.component';
+import { SettingsService } from '../settings/settings.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -21,6 +22,7 @@ export class LeahContentComponent {
   listening = false;
   conversing = false;
   dictation: any; // Current dictation
+  voices: any;
 
   constructor(
     private gptPage: CgptService,
@@ -28,6 +30,7 @@ export class LeahContentComponent {
     private utilService: UtilService,
     private speechService: SpeechService,
     private logger: NGXLogger,
+    private settingsService: SettingsService,
     public dialog: MatDialog
   ) {
     this.init();
@@ -35,7 +38,9 @@ export class LeahContentComponent {
 
   async init() {
     this.logger.info('init');
-    await this.speechService.init('en', 'us');
+    this.settingsService.load();
+    await this.speechService.init();
+    this.voices = await this.speechService.getVoices();
     await this.gptPage.init();
     await UtilService.sleep(250);
   }
@@ -98,6 +103,7 @@ export class LeahContentComponent {
   settings() {
     const dialogRef = this.dialog.open(SettingsComponent, {
       width: '70%',
+      data: this.voices,
     });
   }
 }
