@@ -32,6 +32,30 @@
         <div class="icon-form-field">
           <mat-form-field>
             <mat-select
+              placeholder="Listening Language"
+              [(value)]="settings.listenLang"
+              (selectionChange)="onListenLangSelect($event)"
+            >
+              <mat-option
+                *ngFor="let listenLang of listenLangs"
+                [value]="listenLang[1]"
+              >
+                {{listenLang[0]}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="lisening Voice"
+          ></mat-icon>
+        </div>
+
+        <div class="icon-form-field">
+          <mat-form-field>
+            <mat-select
               placeholder="Reading Voice"
               [(value)]="settings.voice"
               (selectionChange)="onVoiceSelect($event)"
@@ -49,6 +73,7 @@
             matTooltip="Reading Voice"
           ></mat-icon>
         </div>
+
         <div class="icon-form-field">
           <mat-form-field>
             <mat-select

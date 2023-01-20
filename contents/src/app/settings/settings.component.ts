@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import * as version from '../version';
 import { SettingsService } from './settings.service';
+import { langs } from './listenLangs';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 
 @Component({
@@ -45,6 +46,8 @@ export class SettingsComponent implements OnInit {
     { value: 'redFont', label: 'Red Font' },
   ];
 
+  listenLangs = langs; // Array of supported languages for listening
+  listenRegion = [];
   constructor(
     public dialogRef: MatDialogRef<SettingsComponent>,
     private settingsService: SettingsService,
@@ -76,6 +79,10 @@ export class SettingsComponent implements OnInit {
 
   onVoiceSelect(event: any) {
     this.settingsService.setUserSetting('voice', event.value);
+  }
+
+  onListenLangSelect(event: any) {
+    this.settingsService.setUserSetting('listenLang', event.value);
   }
 
   onHiliteSelect(event: any) {

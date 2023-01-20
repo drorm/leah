@@ -20,7 +20,7 @@ export class SettingsService {
     speed: 1.0,
     level: 5,
     appMode: 'parent_mode',
-    language: 'en',
+    listenLang: 'en',
     voice: 'en-us',
     classroomMode: false,
   };
