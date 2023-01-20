@@ -37,7 +37,7 @@ export class LeahContentComponent {
   }
 
   async init() {
-    this.logger.info('init');
+    this.logger.info('init Leah');
     this.settingsService.load();
     await this.speechService.init();
     this.voices = await this.speechService.getVoices();
@@ -47,14 +47,13 @@ export class LeahContentComponent {
 
   async converse() {
     while (this.conversing) {
-      this.logger.info('========== new conversation');
+      this.logger.debug('========== new conversation');
       this.voiceService.init('English', 'US');
       this.listening = true;
       const request = await this.voiceService.fetch();
       this.listening = false;
-      this.logger.info('speech:', request);
       if (request) {
-        this.logger.info('========== start handleRequest');
+        this.logger.debug('start speech request:', request);
         await this.handleRequest(request);
       }
       await UtilService.sleep(1000);
@@ -64,11 +63,11 @@ export class LeahContentComponent {
   async handleRequest(request: string) {
     await this.gptPage.sendMessage(request);
     const response = await this.gptPage.getMessage();
-    this.logger.info('response', response);
+    this.logger.debug('response', response);
     if (response) {
       await this.speak(response);
     }
-    this.logger.info('done speaking', response);
+    this.logger.debug('done speaking', response);
   }
 
   ngAfterViewInit() {}

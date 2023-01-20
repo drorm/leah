@@ -116,15 +116,15 @@ export class SpeechService {
   async speakSentence(text: string) {
     const that = this;
     const speechVoice = this.settingsService.userSettings.voice;
-    this.logger.info('speechVoice', speechVoice);
+    this.logger.debug('speechVoice', speechVoice);
     return new Promise(async (resolve, reject) => {
-      this.logger.info('speaking', text);
+      this.logger.debug('speaking', text);
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.voice = that.voice;
       window.speechSynthesis.speak(utterance);
       console.log(utterance); // Do not remove. bug: onend won't fire if we don't have this here.
       utterance.onend = (event) => {
-        this.logger.info('onend');
+        this.logger.debug('onend');
         resolve(event);
       };
     });
@@ -133,21 +133,18 @@ export class SpeechService {
   stop() {
     this.stopRequest = true;
     if (this.speech) {
-      this.logger.info('Cancel speak');
       this.speech.cancel();
     }
   }
 
   pause() {
     if (this.speech) {
-      this.logger.info('pause speak');
       this.speech.pause();
     }
   }
 
   resume() {
     if (this.speech) {
-      this.logger.info('resume speak');
       this.speech.resume();
     }
   }

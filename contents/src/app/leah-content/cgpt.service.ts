@@ -23,9 +23,9 @@ export class CgptService {
   async init() {
     await this.getTextArea();
     if (!this.textarea) {
-      this.logger.info('Please log in to OpenAI Chat');
-      this.logger.info("Press enter when you're done");
-      this.logger.info('Logged in');
+      this.logger.info(
+        "Please log in to OpenAI Chat. Press enter when you're done"
+      );
       return;
     }
   }

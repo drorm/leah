@@ -38,7 +38,7 @@ export class SettingsService {
    */
   load() {
     const settings = this.storage.retrieve(SETTINGS);
-    this.logger.info('default settings:', this.userSettings);
+    this.logger.debug('default settings:', this.userSettings);
     if (settings) {
       // if thre're settings in localStorage - use them
       if (settings) {
@@ -52,7 +52,7 @@ export class SettingsService {
             value = this.userSettings[key]; // Set it to the default
           }
         }
-        this.logger.info('new settings:', this.userSettings);
+        this.logger.debug('new settings:', this.userSettings);
         this.userSettings = settings;
       }
     }

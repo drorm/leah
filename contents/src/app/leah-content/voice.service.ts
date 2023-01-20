@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { UtilService } from './util.service';
 
+/**
+ * SpeechService provides a simple way to use the SpeechSynthesis capability provided in modern browsers.
+ */
 declare var webkitSpeechRecognition: any;
 
 // From https://github.com/DefinitelyTyped/DefinitelyTyped/blob/20217c8228ad3837045c450e389fe92e8598cdd7/types/dom-speech-recognition/index.d.ts
@@ -36,9 +39,9 @@ export class VoiceService {
   constructor(private logger: NGXLogger, private utilService: UtilService) {}
 
   init(language: string, country: string) {
-    this.logger.info('init VoiceService');
+    this.logger.debug('init VoiceService');
     if ('webkitSpeechRecognition' in window) {
-      this.logger.info('got  webkitSpeechRecognition');
+      this.logger.debug('got  webkitSpeechRecognition');
       this.recognition = new webkitSpeechRecognition();
       this.recognition.lang = language + '-' + country; //TODO
       this.recognition.interimResults = true;
@@ -61,8 +64,7 @@ export class VoiceService {
       if (this.recognition) {
         this.recognition.onend = (event: SpeechRecognitionEvent) => {
           this.done = true;
-          that.logger.info('recognition.onend');
-          that.logger.info(fullTranscript);
+          that.logger.debug('recognition.onend:', fullTranscript);
           resolve(fullTranscript);
         };
 
@@ -76,7 +78,7 @@ export class VoiceService {
             }
             if (event.results[ii].isFinal) {
               fullTranscript += event.results[ii][0].transcript;
-              that.logger.info('onresult fullTranscript', fullTranscript);
+              that.logger.debug('onresult fullTranscript', fullTranscript);
               speaking = false;
             } else {
               speaking = true;
@@ -105,15 +107,14 @@ export class VoiceService {
           }
         };
         this.recognition.start();
-        this.logger.info(`starting recognition`);
+        this.logger.debug(`starting recognition`);
         for (let ii = 0; ii < UtilService.LISTEN_TIMEOUT; ii++) {
           if (!speechStarted || speaking) {
             // Wait till they've started to speak
             await UtilService.sleep(500); // keep checking
             ii = 0;
           }
-          that.logger.info(`ii: ${ii}`);
-          that.logger.info(`fullTranscript: ${fullTranscript}`);
+          that.logger.debug(`ii: ${ii} fullTranscript: ${fullTranscript}`);
           await UtilService.sleep(1000); // keep checking
         }
         this.stop();
@@ -125,7 +126,7 @@ export class VoiceService {
 
   stop() {
     if (this.recognition) {
-      this.logger.info('stop request');
+      this.logger.debug('stop request');
       this.recognition.stop();
     }
   }

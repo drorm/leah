@@ -51,7 +51,6 @@ export class SettingsComponent implements OnInit {
     private logger: NGXLogger,
     @Inject(MAT_DIALOG_DATA) public data: SpeechSynthesisVoice[]
   ) {
-    this.logger.info(data);
     this.voices = data;
   }
 
