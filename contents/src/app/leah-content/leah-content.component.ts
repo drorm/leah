@@ -50,7 +50,14 @@ export class LeahContentComponent {
       this.logger.debug('========== new conversation');
       this.voiceService.init('English', 'US');
       this.listening = true;
-      const request = await this.voiceService.fetch();
+      let request = '';
+      try {
+        request = await this.voiceService.fetch();
+      } catch (err) {
+        // This will also catch 'No speech was detected, try again' which is not really an error
+        this.logger.error(err);
+        request = '';
+      }
       this.listening = false;
       if (request) {
         this.logger.debug('start speech request:', request);
