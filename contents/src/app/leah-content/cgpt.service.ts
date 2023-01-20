@@ -23,7 +23,7 @@ export class CgptService {
   async init() {
     await this.getTextArea();
     if (!this.textarea) {
-      this.logger.info(
+      this.logger.warn(
         "Please log in to OpenAI Chat. Press enter when you're done"
       );
       return;

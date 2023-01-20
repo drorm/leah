@@ -49,7 +49,7 @@ export class VoiceService {
       this.recognition.continuous = true;
       this.done = false;
     } else {
-      this.logger.info('Speech recognition not supported in this browser');
+      this.logger.error('Speech recognition not supported in this browser');
     }
   }
 
@@ -89,19 +89,19 @@ export class VoiceService {
         this.recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
           switch (event.error) {
             case 'not-allowed':
-              that.logger.info('Permission to use microphone was denied');
+              that.logger.error('Permission to use microphone was denied');
               reject('Permission to use microphone was denied');
               break;
             case 'service-not-allowed':
-              that.logger.info('Microphone is not available');
+              that.logger.error('Microphone is not available');
               reject('Microphone is not available');
               break;
             case 'no-speech':
-              that.logger.info('No speech was detected, try again');
+              that.logger.error('No speech was detected, try again');
               reject('No speech was detected, try again');
               break;
             default:
-              that.logger.info('An error occurred: ' + event.error);
+              that.logger.error('An error occurred: ' + event.error);
               reject('An error occurred: ' + event.error);
               break;
           }
