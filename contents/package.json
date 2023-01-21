@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "olddev": "/* seems to break the build*/ node --max_old_space_size=8192 node_modules/.bin/ng build --watch --named-chunks --vendor-chunk --source-map",
+    "dev": "node --max_old_space_size=8192 node_modules/.bin/ng build --watch --named-chunks",
     "test": "ng test"
   },
   "private": true,
@@ -24,6 +25,7 @@
     "@types/artyom.js": "^1.0.6",
     "@types/jquery": "^3.5.16",
     "artyom.js": "^1.0.6",
+    "bootstrap": "^5.2.3",
     "http-server": "^14.1.1",
     "jquery": "^3.6.3",
     "ngx-logger": "5.0.11",
