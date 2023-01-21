@@ -52,8 +52,8 @@ export class SettingsService {
             value = this.userSettings[key]; // Set it to the default
           }
         }
-        this.logger.debug('new settings:', this.userSettings);
         this.userSettings = settings;
+        this.logger.debug('new settings:', this.userSettings);
       }
     }
   }

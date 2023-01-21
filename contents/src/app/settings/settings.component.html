@@ -6,52 +6,9 @@
       </div>
 
       <div class="col-md-6 group">
-        <h2>Reading</h2>
+        <h2>Bot Speacking</h2>
 
         <div class="icon-form-field"></div>
-        <div class="icon-form-field">
-          <mat-form-field>
-            <mat-select
-              placeholder="Reading Speed"
-              (selectionChange)="onSpeedSelect($event)"
-            >
-              <mat-option *ngFor="let speed of speeds" [value]="speed.value">
-                {{speed.label}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-icon
-            class="info"
-            fontSet="fa"
-            fontIcon="fa-info-circle"
-            matTooltipClass="infoText"
-            matTooltip="Speed of reading the book"
-          ></mat-icon>
-        </div>
-
-        <div class="icon-form-field">
-          <mat-form-field>
-            <mat-select
-              placeholder="Listening Language"
-              [(value)]="settings.listenLang"
-              (selectionChange)="onListenLangSelect($event)"
-            >
-              <mat-option
-                *ngFor="let listenLang of listenLangs"
-                [value]="listenLang[1]"
-              >
-                {{listenLang[0]}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-icon
-            class="info"
-            fontSet="fa"
-            fontIcon="fa-info-circle"
-            matTooltipClass="infoText"
-            matTooltip="lisening Voice"
-          ></mat-icon>
-        </div>
 
         <div class="icon-form-field">
           <mat-form-field>
@@ -71,6 +28,27 @@
             fontIcon="fa-info-circle"
             matTooltipClass="infoText"
             matTooltip="Reading Voice"
+          ></mat-icon>
+        </div>
+
+        <div class="icon-form-field">
+          <mat-form-field>
+            <mat-select
+              [(value)]="settings.speed"
+              placeholder="Speaking Speed"
+              (selectionChange)="onSpeedSelect($event)"
+            >
+              <mat-option *ngFor="let speed of speeds" [value]="speed.value">
+                {{speed.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="Speed of bot speaking to you"
           ></mat-icon>
         </div>
 
@@ -117,7 +95,32 @@
       </div>
 
       <div class="col-md-6 group">
-        <h2>Other</h2>
+        <h2>You Speaking</h2>
+
+        <div class="icon-form-field">
+          <mat-form-field>
+            <mat-select
+              placeholder="Listening Language"
+              [(value)]="settings.listenLang"
+              (selectionChange)="onListenLangSelect($event)"
+            >
+              <mat-option
+                *ngFor="let listenLang of listenLangs"
+                [value]="listenLang[1]"
+              >
+                {{listenLang[0]}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-icon
+            class="info"
+            fontSet="fa"
+            fontIcon="fa-info-circle"
+            matTooltipClass="infoText"
+            matTooltip="lisening Voice"
+          ></mat-icon>
+        </div>
+
         <div class="icon-form-field">
           <mat-icon
             fontSet="fa"

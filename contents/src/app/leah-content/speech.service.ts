@@ -23,6 +23,7 @@ export class SpeechService {
   volume = 1; // The volume value, between 0 (lowest) and 1 (highest.)
   rate = 1; // The rate value, between 0.1 (lowest) and 10 (highest), with 1 being the default
   pitch = 1; // The pitch value, between 0 (lowest) and 2 (highest), with 1 being the default
+  userSettings: any;
   voice: SpeechSynthesisVoice = {
     default: false,
     lang: 'en-US',
@@ -45,6 +46,8 @@ export class SpeechService {
    * Initializes the speech synthesis by setting the speech property to the window's speechSynthesis.
    */
   async init() {
+    this.userSettings = this.settingsService.userSettings;
+    this.logger.debug(this.userSettings);
     this.speech = window.speechSynthesis;
     this.speech.cancel(); // Reset it to take care of bugs in the Chrome's engine
     this.logger.debug('init speech');
@@ -61,6 +64,7 @@ export class SpeechService {
       window.speechSynthesis.onvoiceschanged = function () {
         const availableVoices = window.speechSynthesis.getVoices();
         that.voices = availableVoices;
+        that.logger.debug('availableVoices', availableVoices);
         resolve(availableVoices);
       };
     });
@@ -74,14 +78,14 @@ export class SpeechService {
    * 3. Call speakSentence to do the actual speaking
    */
   async speak(text: string) {
+    const userVoice = this.userSettings.voice;
     const that = this;
     return new Promise(async (resolve, reject) => {
-      const userVoice = this.settingsService.userSettings.voice;
       // Find out voice in the list of available voices
-      const foundVoice = this.voices.filter(function (
+      const foundVoice = that.voices.filter(function (
         voice: SpeechSynthesisVoice
       ) {
-        return voice.lang == userVoice;
+        return voice.lang.toUpperCase() === userVoice.toUpperCase();
       })[0];
       that.voice = foundVoice;
       /*
@@ -115,12 +119,12 @@ export class SpeechService {
    */
   async speakSentence(text: string) {
     const that = this;
-    const speechVoice = this.settingsService.userSettings.voice;
-    this.logger.debug('speechVoice', speechVoice);
     return new Promise(async (resolve, reject) => {
       this.logger.debug('speaking', text);
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.voice = that.voice;
+      this.logger.debug('voice', that.voice);
+      utterance.rate = that.userSettings.speed;
       window.speechSynthesis.speak(utterance);
       console.log(utterance); // Do not remove. bug: onend won't fire if we don't have this here.
       utterance.onend = (event) => {
