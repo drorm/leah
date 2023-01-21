@@ -87,6 +87,7 @@ export class LeahContentComponent {
 
   async run() {
     const paragraph = 'Hello';
+    // const paragraph = `The winter is typically the rainy season for California, the time of year when many of the state’s aquifers get recharged with precipitation. But snowmelt that begins in the spring and continues throughout the summer is crucial in refilling aquifers, too, typically providing about 30 percent of the water supply for the state. `;
     if (!this.speaking) {
       await this.speak(paragraph);
     } else {
