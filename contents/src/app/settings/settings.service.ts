@@ -15,7 +15,7 @@ const SETTINGS = 'settings';
 })
 export class SettingsService {
   userSettings: any = {
-    autoReadBook: true,
+    readSentence: true,
     hilite: 'yellow',
     speed: 1.0,
     level: 5,

@@ -69,8 +69,8 @@ export class SettingsComponent implements OnInit {
     return event.checked;
   }
 
-  onAutoReadBook(event: any) {
-    this.settingsService.setUserSetting('autoReadBook', event.checked);
+  onReadSentence(event: any) {
+    this.settingsService.setUserSetting('readSentence', event.checked);
   }
 
   onSpeedSelect(event: any) {
