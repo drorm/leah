@@ -28,6 +28,7 @@
     "bootstrap": "^5.2.3",
     "http-server": "^14.1.1",
     "jquery": "^3.6.3",
+    "material-icons": "^1.13.1",
     "ngx-logger": "5.0.11",
     "ngx-webstorage": "^11.1.1",
     "rxjs": "~7.5.0",

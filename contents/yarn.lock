@@ -4895,6 +4895,11 @@ make-fetch-happen@^11.0.0:
     socks-proxy-agent "^7.0.0"
     ssri "^10.0.0"
 
+material-icons@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-1.13.1.tgz#27de79bf68a4db0a1caec099d4f54ba658770e89"
+  integrity sha512-6EwhlEa4rwydNSWw11ig1oz/h/KcarJXn4n50Wd69v5Eh026Y6xBo9zLPeX4iF8+qUZV862X0AUUA0m0VaihWg==
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
