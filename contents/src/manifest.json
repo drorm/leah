@@ -1,0 +1,30 @@
+{
+  "name": "Leah: Language Educator And Helper'",
+  "version": "1.0",
+  "description": "AI driven language learning",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "webNavigation", "storage", "scripting"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/chat", "https://cdbfly.org/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "leah-content.js",
+        "leah-styles.css",
+        "leah-content.js.map"
+      ],
+      "matches": ["https://chat.openai.com/*", "https://cdbfly.org/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "exten.html"
+  }
+}
