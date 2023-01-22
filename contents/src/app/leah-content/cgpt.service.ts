@@ -27,6 +27,8 @@ export class CgptService {
         "Please log in to OpenAI Chat. Press enter when you're done"
       );
       return;
+    } else {
+      this.logger.info('Logged in to ChatGPT');
     }
   }
 
@@ -48,6 +50,13 @@ export class CgptService {
       await this.sleep(1000);
     }
     return null;
+  }
+
+  /**
+   * Update the textarea without submitting it.
+   */
+  updateTextArea(message: string) {
+    $('textarea.m-0').val(message);
   }
 
   /**
