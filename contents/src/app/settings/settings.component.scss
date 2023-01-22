@@ -6,15 +6,15 @@
 }
 /* Text in a tooltip */
 .infoText {
-    font-size: 0.8vw;
-  }
+  font-size: 0.8vw;
+}
 
 /* Info icon */
-.info {
+.help {
   font-size: 1.3vw;
-  padding-left: .6vw;
+  padding-left: 0.6vw;
 }
-@media screen and (max-width: 884px){
+@media screen and (max-width: 884px) {
   .docs-footer-list {
     flex-direction: column;
   }

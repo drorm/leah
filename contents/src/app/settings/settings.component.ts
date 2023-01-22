@@ -7,6 +7,7 @@ import {
 import * as version from '../version';
 import { SettingsService } from './settings.service';
 import { langs } from './listenLangs';
+import { defaultPrompts } from './prompts';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 
 @Component({
@@ -59,8 +60,8 @@ export class SettingsComponent implements OnInit {
 
   onElementsAnimationsToggle(event: any) {}
 
-  onClassroomModeToggle(event: any) {
-    this.settingsService.setUserSetting('classroomMode', event.checked);
+  onRecognitionProgress(event: any) {
+    this.settingsService.setUserSetting('recognitionProgress', event.checked);
     /*
     event.checked
       ? this.router.navigate(['/childLib'])
@@ -87,6 +88,10 @@ export class SettingsComponent implements OnInit {
 
   onHiliteSelect(event: any) {
     this.settingsService.setUserSetting('hilite', event.value);
+  }
+
+  onPromptSelect(event: any) {
+    this.settingsService.setUserSetting('chosenPrompt', event.value);
   }
 
   ngOnInit() {

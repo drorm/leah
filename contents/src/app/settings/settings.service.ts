@@ -2,6 +2,7 @@ import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { LocalStorageService } from 'ngx-webstorage';
+import { defaultPrompts } from './prompts';
 
 const SETTINGS = 'settings';
 
@@ -10,6 +11,15 @@ const SETTINGS = 'settings';
  * Loads and saves settings from local storage and makes them available
  * to various parts of the app
  */
+
+interface prompt {
+  type: string;
+  title: string;
+  body: string;
+  listenVoice: string;
+  speakVoice: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +32,9 @@ export class SettingsService {
     appMode: 'parent_mode',
     listenLang: 'en',
     voice: 'en-us',
-    classroomMode: false,
+    recognitionProgress: true,
+    prompts: [],
+    chosenPrompt: prompt,
   };
 
   // prettier-ignore
@@ -37,24 +49,22 @@ export class SettingsService {
    * Use the default if a setting is not enabled
    */
   load() {
+    this.userSettings.prompts = defaultPrompts;
     const settings = this.storage.retrieve(SETTINGS);
     this.logger.debug('default settings:', this.userSettings);
     if (settings) {
-      // if thre're settings in localStorage - use them
-      if (settings) {
-        // If we have previously saved settings
-        const settingArray = Object.keys(this.userSettings);
-        for (let ii = 0; ii < settingArray.length; ii++) {
-          const key = settingArray[ii];
-          let value = settings[key];
-          if (value === undefined) {
-            // This is a new setting created by a new version of the app
-            value = this.userSettings[key]; // Set it to the default
-          }
+      // If we have previously saved settings
+      const settingArray = Object.keys(this.userSettings);
+      for (let ii = 0; ii < settingArray.length; ii++) {
+        const key = settingArray[ii];
+        let value = settings[key];
+        if (value === undefined) {
+          // This is a new setting created by a new version of the app
+          settings[key] = this.userSettings[key]; // Set it to the default
         }
-        this.userSettings = settings;
-        this.logger.debug('new settings:', this.userSettings);
       }
+      this.userSettings = settings;
+      this.logger.debug('new settings:', this.userSettings);
     }
   }
 
