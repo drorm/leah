@@ -4,7 +4,9 @@ import { UtilService } from './util.service';
 import { SettingsService } from '../settings/settings.service';
 
 /**
- * SpeechService provides a simple way to use the SpeechSynthesis capability provided in modern browsers.
+ * VoiceService handles speech recognition capability provided in *Google Chrome*.
+ * https://developer.chrome.com/blog/voice-driven-web-apps-introduction-to-the-web-speech-api/
+ * https://wicg.github.io/speech-api/#speechreco-section
  */
 declare var webkitSpeechRecognition: any;
 
@@ -52,7 +54,6 @@ export class VoiceService {
       const userListenLang = this.settingsService.userSettings.listenLang;
       this.logger.debug(userListenLang);
       this.recognition.lang = userListenLang;
-      // this.recognition.lang = language + '-' + country; //TODO
       this.recognition.interimResults = true;
       this.recognition.maxAlternatives = 1;
       this.recognition.continuous = true;
@@ -62,7 +63,7 @@ export class VoiceService {
     }
   }
 
-  async fetch(): Promise<any> {
+  async fetch(updateTextArea?: Function): Promise<any> {
     let currFinal = '';
     let fullTranscript = '';
     let speechStarted = false;
@@ -77,6 +78,15 @@ export class VoiceService {
           resolve(fullTranscript);
         };
 
+        /*
+         * See https://developer.chrome.com/blog/voice-driven-web-apps-introduction-to-the-web-speech-api/
+         * The recognition has two kinds of results: interim and final.
+         * As it hears words, it makes guesses at what they are, these are the interim results.
+         * These can change as it collects more words.
+         * When it decides what a sentence/phrase is, it's final, and moves on to the next one.
+         * The sentences are put put into a "result" object, and the conversation has an array of results.
+         * See https://wicg.github.io/speech-api/#dom-speechrecognitionevent-results
+         */
         this.recognition.onresult = (event: SpeechRecognitionEvent) => {
           speechStarted = true;
           const results = event.results;
@@ -85,11 +95,19 @@ export class VoiceService {
             if (that.done) {
               break;
             }
-            if (event.results[ii].isFinal) {
-              fullTranscript += event.results[ii][0].transcript;
-              that.logger.debug('onresult fullTranscript', fullTranscript);
+            const currResult = event.results[ii];
+            if (currResult.isFinal) {
+              fullTranscript += currResult[0].transcript;
+              that.logger.info('onresult fullTranscript', fullTranscript);
               speaking = false;
             } else {
+              if (updateTextArea) {
+                updateTextArea(fullTranscript + currResult[0].transcript);
+              }
+              that.logger.debug(
+                'onresult interim_transcript',
+                currResult[0].transcript
+              );
               speaking = true;
             }
           }
