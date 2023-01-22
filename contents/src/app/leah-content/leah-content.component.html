@@ -1,27 +1,43 @@
 <div class="container">
   <mat-toolbar color="primary" id="toolbar">
     <mat-toolbar-row class="media-action-bar">
-      <button mat-button (click)="run()" *ngIf="!speaking">
+      <button
+        mat-button
+        (click)="run()"
+        title="Hear a test sound"
+        *ngIf="!speaking"
+      >
         <mat-icon mat-list-icon>play_arrow</mat-icon>
       </button>
-      <button mat-button (click)="run()" *ngIf="speaking">
+      <button
+        mat-button
+        (click)="run()"
+        title="Stop the bot's speaking"
+        *ngIf="speaking"
+      >
         <mat-icon mat-list-icon>pause</mat-icon>
       </button>
       <button
         mat-raised-button
         color="warn"
         (click)="start()"
+        title="Click to start talking to the bot."
         *ngIf="!listening"
       >
         <mat-icon mat-list-icon>mic_off</mat-icon>
       </button>
-      <button mat-button (click)="stop()" *ngIf="listening">
+      <button
+        mat-button
+        (click)="stop()"
+        title="Click to stop talking to the bot."
+        *ngIf="listening"
+      >
         <mat-icon mat-list-icon>mic</mat-icon>
       </button>
-      <button mat-button (click)="settings()">
+      <button mat-button title="Change the app's settings" (click)="settings()">
         <mat-icon mat-list-icon>settings</mat-icon>
       </button>
-      <button mat-button>
+      <button mat-button title="Help">
         <mat-icon mat-list-icon>help</mat-icon>
       </button>
     </mat-toolbar-row>
