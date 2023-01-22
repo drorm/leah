@@ -52,7 +52,7 @@ export class LeahContentComponent {
       this.listening = true;
       let request = '';
       try {
-        request = await this.voiceService.fetch();
+        request = await this.voiceService.fetch(this.gptPage.updateTextArea);
       } catch (err) {
         // This will also catch 'No speech was detected, try again' which is not really an error
         this.logger.error(err);
