@@ -63,7 +63,7 @@ export class VoiceService {
     }
   }
 
-  async fetch(updateTextArea?: Function): Promise<any> {
+  async fetch(updateTextArea: Function): Promise<any> {
     let currFinal = '';
     let fullTranscript = '';
     let speechStarted = false;
@@ -101,7 +101,8 @@ export class VoiceService {
               that.logger.info('onresult fullTranscript', fullTranscript);
               speaking = false;
             } else {
-              if (updateTextArea) {
+              // if user wants up to show progress
+              if (this.settingsService.userSettings.recognitionProgress) {
                 updateTextArea(fullTranscript + currResult[0].transcript);
               }
               that.logger.debug(
