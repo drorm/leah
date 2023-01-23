@@ -6,3 +6,14 @@ mat-toolbar {
   right: 1rem;
   z-index: 1000;
 }
+
+/* Make the mic blink when it's listening */
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

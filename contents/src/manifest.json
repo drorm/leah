@@ -10,7 +10,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://chat.openai.com/chat", "https://cdbfly.org/*"],
+      "matches": ["https://chat.openai.com/chat"],
       "js": ["content.js"]
     }
   ],
@@ -25,7 +25,7 @@
         "polyfills.js.map",
         "runtime.js.map"
       ],
-      "matches": ["https://chat.openai.com/*", "https://cdbfly.org/*"]
+      "matches": ["https://chat.openai.com/*"]
     }
   ],
   "action": {
