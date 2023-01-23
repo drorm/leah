@@ -9,6 +9,7 @@
       >
         <mat-icon mat-list-icon>play_arrow</mat-icon>
       </button>
+
       <button
         mat-button
         (click)="run()"
@@ -17,6 +18,7 @@
       >
         <mat-icon mat-list-icon>pause</mat-icon>
       </button>
+
       <button
         mat-raised-button
         color="warn"
@@ -26,9 +28,10 @@
       >
         <mat-icon mat-list-icon>mic_off</mat-icon>
       </button>
+
       <button
         mat-button
-        (click)="stop()"
+        (click)="stopListen()"
         class="blink_me"
         color="basic"
         title="Click to stop talking to the bot."
@@ -36,9 +39,11 @@
       >
         <mat-icon mat-list-icon>mic</mat-icon>
       </button>
+
       <button mat-button title="Change the app's settings" (click)="settings()">
         <mat-icon mat-list-icon>settings</mat-icon>
       </button>
+
       <button mat-button title="Help">
         <mat-icon mat-list-icon>help</mat-icon>
       </button>

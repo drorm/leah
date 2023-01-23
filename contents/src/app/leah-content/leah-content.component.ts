@@ -109,6 +109,12 @@ export class LeahContentComponent {
     await this.speechService.stop();
   }
 
+  async stopListen() {
+    this.conversing = false;
+    this.listening = false;
+    await this.voiceService.stop();
+  }
+
   settings() {
     const dialogRef = this.dialog.open(SettingsComponent, {
       width: '70%',
