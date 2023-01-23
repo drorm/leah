@@ -56,7 +56,9 @@ export class LeahContentComponent {
       } catch (err) {
         // This will also catch 'No speech was detected, try again' which is not really an error
         this.logger.error(err);
-        request = '';
+        this.listening = false;
+        alert('No speech detected');
+        return;
       }
       this.listening = false;
       if (request) {
