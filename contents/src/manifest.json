@@ -17,9 +17,13 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "leah-content.js",
-        "leah-styles.css",
-        "leah-content.js.map"
+        "main.js",
+        "polyfills.js",
+        "runtime.js",
+        "styles.css",
+        "main.js.map",
+        "polyfills.js.map",
+        "runtime.js.map"
       ],
       "matches": ["https://chat.openai.com/*", "https://cdbfly.org/*"]
     }
