@@ -28,8 +28,6 @@ export class SettingsService {
     readSentence: true,
     hilite: 'yellow',
     speed: 1.0,
-    level: 5,
-    appMode: 'parent_mode',
     listenLang: 'en',
     voice: 'en-us',
     recognitionProgress: true,
