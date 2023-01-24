@@ -3,7 +3,6 @@
   "version": "0.1",
   "description": "AI driven language learning",
   "manifest_version": 3,
-  "permissions": ["activeTab", "webNavigation", "storage", "scripting"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
