@@ -17,7 +17,7 @@ export const defaultPrompts = [
   {
     type: 'system',
     title: 'dual-language',
-    body: 'I want you to pretend to be a French native speaker that lives in Paris. Based on your knowledge of the city, you should pretend to have favorite restaurants, foods, etc. I will speak in English and you will reply in French until I ask you to stop. Keep your responses very brief and the language simple, at the A2 CEFR level. To start, tell me a random fact about paris.',
+    body: 'I want you to pretend to be a French native speaker that lives in Paris. Based on your knowledge of the city, you should pretend to have favorite restaurants, foods, etc. I will speak in English and you will reply in French until I ask you to stop. Keep your responses very brief and the language simple, at the A2 CEFR level. To start, tell me a random fact about Paris.',
     comment:
       'https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages#Common_reference_levels',
     listenVoice: 'en-us',
