@@ -125,7 +125,7 @@ export class VoiceService {
               reject('Microphone is not available');
               break;
             case 'no-speech':
-              that.logger.error('No speech was detected, try again');
+              that.logger.warn('No speech was detected, try again');
               if (that.retries > 0) {
                 //We keep trying until we reach the limit
                 that.logger.debug(`Try #${that.retries}`);
