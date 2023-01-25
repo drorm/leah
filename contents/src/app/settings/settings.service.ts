@@ -4,7 +4,7 @@ import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { LocalStorageService } from 'ngx-webstorage';
 import { defaultPrompts } from './prompts';
 
-const SETTINGS = 'settings';
+const SETTINGS = 'Leah-settings';
 
 /**
  * @title Settings service,
@@ -24,15 +24,17 @@ interface prompt {
   providedIn: 'root',
 })
 export class SettingsService {
+  public static readonly PROMPT_NONE = 'none';
+
   userSettings: any = {
     readSentence: true,
     hilite: 'yellow',
     speed: 1.0,
-    listenLang: 'en',
+    listenLang: 'en-us',
     voice: 'en-us',
     recognitionProgress: true,
     prompts: [],
-    chosenPrompt: prompt,
+    chosenPrompt: 'none',
   };
 
   // prettier-ignore
@@ -62,6 +64,7 @@ export class SettingsService {
         }
       }
       this.userSettings = settings;
+      this.storage.store(SETTINGS, this.userSettings); // In case it's the first time
       this.logger.debug('new settings:', this.userSettings);
     }
   }

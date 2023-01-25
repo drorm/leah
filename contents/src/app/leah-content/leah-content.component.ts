@@ -150,7 +150,8 @@ export class LeahContentComponent {
 
   async setPrompt() {
     const promptName = this.userSettings.chosenPrompt;
-    if (promptName) {
+    // prettier-ignore
+    if (promptName && (promptName !== SettingsService.PROMPT_NONE)) {
       this.listening = false;
       // Find the prompts in the array of available prompts.
       const myPrompt = this.userSettings.prompts.filter(
