@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -35,6 +36,7 @@ import { SettingsComponent } from './settings/settings.component';
     MatDialogModule,
     MatFormFieldModule,
     MatSlideToggleModule,
+    MatCardModule,
     MatSelectModule,
     DragDropModule,
     NgxWebstorageModule.forRoot(),
