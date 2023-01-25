@@ -12,7 +12,7 @@ const SETTINGS = 'Leah-settings';
  * to various parts of the app
  */
 
-interface prompt {
+export interface prompt {
   type: string;
   title: string;
   body: string;

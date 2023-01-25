@@ -5,7 +5,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import * as version from '../version';
-import { SettingsService } from './settings.service';
+import { prompt, SettingsService } from './settings.service';
 import { langs } from './listenLangs';
 import { defaultPrompts } from './prompts';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
@@ -90,8 +90,17 @@ export class SettingsComponent implements OnInit {
     this.settingsService.setUserSetting('hilite', event.value);
   }
 
+  /*
+   * When they select a prompt, it also affects the languages
+   */
   onPromptSelect(event: any) {
     this.settingsService.setUserSetting('chosenPrompt', event.value);
+    const myPrompt = this.settingsService.userSettings.prompts.filter(
+      (pr: prompt) => pr.title === event.value
+    )[0];
+    this.logger.debug(myPrompt);
+    this.settingsService.setUserSetting('listenLang', myPrompt.listenVoice);
+    this.settingsService.setUserSetting('voice', myPrompt.speakVoice);
   }
 
   ngOnInit() {
