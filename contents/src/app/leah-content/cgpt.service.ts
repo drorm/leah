@@ -28,7 +28,7 @@ export class CgptService {
       );
       return;
     } else {
-      this.logger.info('Logged in to ChatGPT');
+      this.logger.debug('Logged in to ChatGPT');
     }
   }
 

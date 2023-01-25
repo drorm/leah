@@ -157,7 +157,7 @@ export class LeahContentComponent {
       const myPrompt = this.userSettings.prompts.filter(
         (pr: any) => pr.title === promptName
       );
-      this.logger.info('myPrompt:', myPrompt);
+      this.logger.debug('myPrompt:', myPrompt);
       if (myPrompt && myPrompt[0]) {
         await this.handleRequest(myPrompt[0].body);
       }
