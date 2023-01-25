@@ -68,7 +68,7 @@ export class CgptService {
     $('textarea.m-0').val(message);
     const submit = await $('textarea ~ button:enabled');
     if (submit) {
-      this.logger.info('found submit');
+      this.logger.debug('found submit');
       submit.click();
     }
     return submit;
@@ -80,13 +80,13 @@ export class CgptService {
   async getMessage() {
     let submit: any;
     let text = '';
-    this.logger.info('waiting for submit');
+    this.logger.debug('waiting for submit');
     await this.sleep(1000);
     // limit the number of tries so we're not stuck in this loop
     for (let ii = 0; ii < 100; ii++) {
       submit = await $('textarea ~ button:enabled');
       if (submit.length > 0) {
-        this.logger.info('got submit');
+        this.logger.debug('got submit');
         const pageElements = $("div[class*='text-base']").toArray();
         const numElements = pageElements.length;
         // first let's find the new element
@@ -97,12 +97,12 @@ export class CgptService {
           if (response) {
             this.totalMessages = pageElements.length;
             text = response.innerText;
-            this.logger.info('text:', text);
+            this.logger.debug('text:', text);
             return text; // Found it
           }
         }
       }
-      this.logger.info('no submit sleeping');
+      this.logger.debug('no submit sleeping');
       await this.sleep(1000);
     }
     return ''; // Didn't get a response
