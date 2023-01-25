@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-mat-toolbar {
+#controls {
   position: fixed;
   width: 20rem;
   top: 1rem;
@@ -8,7 +8,7 @@ mat-toolbar {
 }
 
 /* Make the mic blink when it's listening */
-.blink_me {
+.blink {
   animation: blinker 2s linear infinite;
 }
 

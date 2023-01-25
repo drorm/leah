@@ -7,6 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 import { SettingsComponent } from '../settings/settings.component';
 import { SettingsService } from '../settings/settings.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'custom-leah-content',
@@ -15,14 +16,21 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 /*
- *
+ * Leah main module. Basic steps:
+ * 1. Load and inject the prompt.
+ * 2. Listen to the mic
+ * 3. Send to chatGPT
+ * 4. Speak the response
  */
 export class LeahContentComponent {
   speaking = false;
   listening = false;
   conversing = false;
+  promptSet = false;
   dictation: any; // Current dictation
   voices: any;
+  status = 'Press the red button to start';
+  userSettings: any;
 
   constructor(
     private gptPage: CgptService,
@@ -38,7 +46,9 @@ export class LeahContentComponent {
 
   async init() {
     this.logger.info('init Leah');
-    this.settingsService.load();
+    await this.settingsService.load();
+    this.userSettings = this.settingsService.userSettings;
+    this.logger.info('userSettings', this.userSettings);
     await this.speechService.init();
     this.voices = await this.speechService.getVoices();
     await this.gptPage.init();
@@ -50,6 +60,7 @@ export class LeahContentComponent {
       this.logger.debug('========== new conversation');
       this.voiceService.init('English', 'US');
       this.listening = true;
+      this.setStatus('Listening ...');
       let request = '';
       try {
         request = await this.voiceService.fetch(this.gptPage.updateTextArea);
@@ -57,7 +68,7 @@ export class LeahContentComponent {
         // This will also catch 'No speech was detected, try again' which is not really an error
         this.logger.error(err);
         this.listening = false;
-        alert('No speech detected');
+        alert(err);
         return;
       }
       this.listening = false;
@@ -71,9 +82,11 @@ export class LeahContentComponent {
 
   async handleRequest(request: string) {
     await this.gptPage.sendMessage(request);
+    this.setStatus('Waiting for bot');
     const response = await this.gptPage.getMessage();
     this.logger.debug('response', response);
     if (response) {
+      this.setStatus('Bot is speaking');
       await this.speak(response);
     }
     this.logger.debug('done speaking', response);
@@ -99,6 +112,11 @@ export class LeahContentComponent {
   }
 
   async start() {
+    if (!this.promptSet) {
+      //only once and after the user clicked on the icon
+      await this.setPrompt();
+      this.promptSet = true;
+    }
     this.conversing = true;
     this.converse();
   }
@@ -120,5 +138,28 @@ export class LeahContentComponent {
       width: '70%',
       data: this.voices,
     });
+  }
+
+  setStatus(message: string) {
+    this.status = message;
+  }
+
+  /*
+   * If the user chose a prompt, we inject the prompt whenever the page is loaded.
+   */
+
+  async setPrompt() {
+    const promptName = this.userSettings.chosenPrompt;
+    if (promptName) {
+      this.listening = false;
+      // Find the prompts in the array of available prompts.
+      const myPrompt = this.userSettings.prompts.filter(
+        (pr: any) => pr.title === promptName
+      );
+      this.logger.info('myPrompt:', myPrompt);
+      if (myPrompt && myPrompt[0]) {
+        await this.handleRequest(myPrompt[0].body);
+      }
+    }
   }
 }

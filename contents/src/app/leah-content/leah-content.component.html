@@ -1,52 +1,72 @@
 <div class="container">
-  <mat-toolbar color="primary" id="toolbar">
-    <mat-toolbar-row class="media-action-bar">
-      <button
-        mat-button
-        (click)="run()"
-        title="Hear a test sound"
-        *ngIf="!speaking"
-      >
-        <mat-icon mat-list-icon>play_arrow</mat-icon>
-      </button>
+  <div id="controls">
+    <mat-toolbar color="primary" id="toolbar">
+      <mat-toolbar-row class="media-action-bar">
+        <button
+          mat-button
+          (click)="run()"
+          title="Hear a test sound"
+          *ngIf="!speaking"
+        ></button>
 
-      <button
-        mat-button
-        (click)="run()"
-        title="Stop the bot's speaking"
-        *ngIf="speaking"
-      >
-        <mat-icon mat-list-icon>pause</mat-icon>
-      </button>
+        <button
+          mat-button
+          (click)="run()"
+          class="blink"
+          title="Stop the bot's speaking"
+          *ngIf="speaking"
+        >
+          <mat-icon mat-list-icon>stop</mat-icon>
+        </button>
 
-      <button
-        mat-raised-button
-        color="warn"
-        (click)="start()"
-        title="Click to start talking to the bot."
-        *ngIf="!listening"
-      >
-        <mat-icon mat-list-icon>mic_off</mat-icon>
-      </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="start()"
+          title="Click to start talking to the bot."
+          *ngIf="!listening"
+        >
+          <mat-icon mat-list-icon>mic_off</mat-icon>
+        </button>
 
-      <button
-        mat-button
-        (click)="stopListen()"
-        class="blink_me"
-        color="basic"
-        title="Click to stop talking to the bot."
-        *ngIf="listening"
-      >
-        <mat-icon mat-list-icon>mic</mat-icon>
-      </button>
+        <button
+          mat-button
+          (click)="stopListen()"
+          class="blink"
+          color="basic"
+          title="Click to stop talking to the bot."
+          *ngIf="listening"
+        >
+          <mat-icon mat-list-icon>mic</mat-icon>
+        </button>
 
-      <button mat-button title="Change the app's settings" (click)="settings()">
-        <mat-icon mat-list-icon>settings</mat-icon>
-      </button>
+        <button
+          mat-button
+          title="Change the app's settings"
+          (click)="settings()"
+        >
+          <mat-icon mat-list-icon>settings</mat-icon>
+        </button>
 
-      <button mat-button title="Help">
-        <mat-icon mat-list-icon>help</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
+        <button mat-button title="Help">
+          <mat-icon mat-list-icon>help</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-card>
+      <mat-card-content>
+        <p>
+          Listening:<b> {{userSettings?.listenLang}}</b> Speaking:
+          <b>{{userSettings?.voice}}</b>
+        </p>
+        <p>
+          Prompt:<b> {{userSettings?.chosenPrompt}}</b> Speed:<b>
+            {{userSettings?.speed}}</b
+          >
+        </p>
+        <hr />
+        <p>Status: <b>{{status}}</b></p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
