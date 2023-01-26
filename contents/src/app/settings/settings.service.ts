@@ -64,9 +64,9 @@ export class SettingsService {
         }
       }
       this.userSettings = settings;
-      this.storage.store(SETTINGS, this.userSettings); // In case it's the first time
-      this.logger.debug('new settings:', this.userSettings);
     }
+    this.storage.store(SETTINGS, this.userSettings); // In case it's the first time
+    this.logger.debug('new settings:', this.userSettings);
   }
 
   setUserSetting(key: string, value: any) {
