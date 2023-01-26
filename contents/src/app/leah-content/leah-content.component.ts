@@ -48,7 +48,7 @@ export class LeahContentComponent {
     this.logger.info('init Leah');
     await this.settingsService.load();
     this.userSettings = this.settingsService.userSettings;
-    this.logger.info('userSettings', this.userSettings);
+    this.logger.debug('userSettings', this.userSettings);
     await this.speechService.init();
     this.voices = await this.speechService.getVoices();
     await this.gptPage.init();

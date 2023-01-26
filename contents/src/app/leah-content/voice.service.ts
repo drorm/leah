@@ -98,7 +98,7 @@ export class VoiceService {
             const currResult = event.results[ii];
             if (currResult.isFinal) {
               fullTranscript += currResult[0].transcript;
-              that.logger.info('onresult fullTranscript', fullTranscript);
+              that.logger.debug('onresult fullTranscript', fullTranscript);
               speaking = false;
             } else {
               // if user wants up to show progress
