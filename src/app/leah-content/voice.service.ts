@@ -46,6 +46,11 @@ export class VoiceService {
     private settingsService: SettingsService
   ) {}
 
+  /**
+   * Initialize the speech recognition service.
+   * @param language  The language to use for speech recognition.
+   * @param country  The country to use for speech recognition.
+   */
   init(language: string, country: string) {
     this.logger.debug('init VoiceService');
     if ('webkitSpeechRecognition' in window) {
@@ -63,6 +68,11 @@ export class VoiceService {
     }
   }
 
+  /**
+   * Listen for speech and return the text that was recognized.
+   * @param updateTextArea  Function to update the text area in the UI when the recognitionProgress flag is set.
+   * @returns  The text that was recognized.
+   */
   async fetch(updateTextArea: Function): Promise<any> {
     let currFinal = '';
     let fullTranscript = '';
@@ -114,6 +124,10 @@ export class VoiceService {
           }
         };
 
+        /**
+         * See https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/onerror
+         * The error event is fired when an error occurs during speech recognition.
+         **/
         this.recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
           switch (event.error) {
             case 'not-allowed':
@@ -158,6 +172,10 @@ export class VoiceService {
     });
   }
 
+  /**
+   * Stop listening for speech
+   * See https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/stop
+   */
   stop() {
     if (this.recognition) {
       this.logger.debug('stop request');
