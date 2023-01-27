@@ -11,7 +11,7 @@ In Google Chrome go to XXX and install the extension
 
 ## Use
 
-Read [the docs](href="https://drorm.github.io/leah/).
+Read [the docs](https://drorm.github.io/leah/).
 
 ## From source
 
