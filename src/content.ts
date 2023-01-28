@@ -12,11 +12,29 @@
  *  </body>
  * which will load the content Angular essentials app
  */
-
-// Inject the script into the page
+// Inject the scripts into the page
 let scr = document.createElement('script');
 scr.type = 'text/javascript';
-scr.src = chrome.runtime.getURL('leah-content.js');
+scr.src = chrome.runtime.getURL('runtime.js');
+try {
+  (document.head || document.documentElement).appendChild(scr);
+} catch (e) {
+  console.log(e);
+}
+
+// Lazy copy and paste, but clearer
+scr = document.createElement('script');
+scr.type = 'text/javascript';
+scr.src = chrome.runtime.getURL('polyfills.js');
+try {
+  (document.head || document.documentElement).appendChild(scr);
+} catch (e) {
+  console.log(e);
+}
+
+scr = document.createElement('script');
+scr.type = 'text/javascript';
+scr.src = chrome.runtime.getURL('main.js');
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
@@ -27,7 +45,7 @@ try {
 var link = document.createElement('link');
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = chrome.runtime.getURL('leah-styles.css');
+link.href = chrome.runtime.getURL('styles.css');
 document.head.appendChild(link);
 const html3 = `
     <custom-root> Custom</custom-root>

@@ -1,27 +1,34 @@
 # Leah: Language Educator And Helper
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+## Overview
 
-## Development server
+Leah is a Google Chrome extension that combines voice recognition, voice synthesis and ChatGPT to provide an environment where you can improve your foreign language skills.
+_Leah works only on https://chat.openai.com/chat_.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
+In Google Chrome go to XXX and install the extension
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Use
 
-## Build
+Read [the docs](https://drorm.github.io/leah/).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## From source
 
-## Running unit tests
+1. Clone this repo
+2. Run yarn install
+3. cd contenets
+4. npm run dev
+5. In Chrome, go to chrome://extensions/, click **Load unpacked** and point at the contents/dist directory.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Repo structure and extension architecture
 
-## Running end-to-end tests
+Leah is a Chrome extension, but almost all of the functionality is in the contents part of the extension. There's no background.js and very little in extern.html which is invoked when you click on the icon.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- The content of Leah is loaded by content.ts.
+- Leah is implemented as an Angular Element which is in turn a Web Component and is loaded by injecting
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+<custom-root> Custom</custom-root>
+<leah-content>leah</leah-content>
+```
