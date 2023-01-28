@@ -16,6 +16,7 @@
             "customWebpackConfig": {
               "path": "./custom-webpack.config.ts"
             },
+            "allowedCommonJsDependencies": ["jquery"],
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
