@@ -1,7 +1,7 @@
 {
   "name": "Leah: Language Educator And Helper'",
   "version": "0.1",
-  "description": "AI driven language learning",
+  "description": "Leah: Language learning tool that uses voice and ChatGPT to help you improve your foreign language skills with prompts",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js",
@@ -29,5 +29,11 @@
   ],
   "action": {
     "default_popup": "exten.html"
+  },
+  "icons": {
+    "16": "images/leah16.png",
+    "32": "images/leah32.png",
+    "48": "images/leah48.png",
+    "128": "images/leah128.png"
   }
 }
