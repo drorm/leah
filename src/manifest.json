@@ -22,7 +22,8 @@
         "styles.css",
         "main.js.map",
         "polyfills.js.map",
-        "runtime.js.map"
+        "runtime.js.map",
+        "content.js.map"
       ],
       "matches": ["https://chat.openai.com/*"]
     }
