@@ -27,6 +27,7 @@ export class LeahContentComponent {
   listening = false;
   conversing = false;
   promptSet = false;
+  currentPrompt: any = null;
   dictation: any; // Current dictation
   voices: any;
   status = 'Press the red button to start';
@@ -81,6 +82,10 @@ export class LeahContentComponent {
   }
 
   async handleRequest(request: string) {
+    if (this.currentPrompt.prefix) {
+      request = `${this.currentPrompt.prefix} ${request}\n`;
+      this.logger.info('request with prefix', request);
+    }
     await this.gptPage.sendMessage(request);
     this.setStatus('Waiting for bot');
     const response = await this.gptPage.getMessage();
@@ -112,10 +117,9 @@ export class LeahContentComponent {
   }
 
   async start() {
-    if (!this.promptSet) {
+    if (!this.currentPrompt) {
       //only once and after the user clicked on the icon
       await this.setPrompt();
-      this.promptSet = true;
     }
     this.conversing = true;
     this.converse();
@@ -159,7 +163,8 @@ export class LeahContentComponent {
       );
       this.logger.debug('myPrompt:', myPrompt);
       if (myPrompt && myPrompt[0]) {
-        await this.handleRequest(myPrompt[0].body);
+        this.currentPrompt = myPrompt[0];
+        await this.handleRequest(this.currentPrompt.body);
       }
     }
   }
