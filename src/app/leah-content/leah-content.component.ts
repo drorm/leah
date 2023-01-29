@@ -81,6 +81,10 @@ export class LeahContentComponent {
   }
 
   async handleRequest(request: string) {
+    if (this.userSettings.prefix) {
+      request = `${this.userSettings.prefix} + ${request}\n`;
+      this.logger.info('request with prefix', request);
+    }
     await this.gptPage.sendMessage(request);
     this.setStatus('Waiting for bot');
     const response = await this.gptPage.getMessage();
