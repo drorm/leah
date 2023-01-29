@@ -10,6 +10,8 @@ Leah combines voice recognition, voice synthesis and ChatGPT to provide an envir
 2. Leah converts your voice to text and sends it to ChatGPT.
 3. ChatGPT responds and Leah speaks the response.
 
+<img src="{{site.url}}/images/dual-language-screenshot.png" style="display: block; margin: auto;" />
+
 ## Prompts
 
 Things get interesting once you incorporate prompts.
