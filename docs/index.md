@@ -46,3 +46,14 @@ You can set the following in the settings:
   - language: the language the speech recognition expects
   - Recognition progress: when on, displays your words as they're recognized. These change as you speak.
 - Prompt: which prompt you want to use. Hover over the choices to see the prompt.
+
+## Changing prompts
+
+Currently, there's no way to change the prompts via the UI. If you're geeky enough:
+
+- Got into Chrome devtools
+  - https://chat.openai.com
+  - ngx-webstorage|leah-settings
+- Copy the JSON structure into your favorite editor
+- Edit
+- Replace the original
