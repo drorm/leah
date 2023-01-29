@@ -1,4 +1,4 @@
-# Leah: Language Educator And Helper
+# Leah: ChatGPT Language Educator And Helper
 
 ## Overview
 
