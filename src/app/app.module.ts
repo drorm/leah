@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -22,9 +23,15 @@ import { createCustomElement } from '@angular/elements';
 
 import { LeahContentComponent } from './leah-content/leah-content.component';
 import { SettingsComponent } from './settings/settings.component';
+import { PromptsComponent } from './prompts/prompts.component';
 
 @NgModule({
-  declarations: [AppComponent, LeahContentComponent, SettingsComponent],
+  declarations: [
+    AppComponent,
+    LeahContentComponent,
+    SettingsComponent,
+    PromptsComponent,
+  ],
   imports: [
     BrowserModule,
     MatButtonToggleModule,
@@ -37,6 +44,7 @@ import { SettingsComponent } from './settings/settings.component';
     MatFormFieldModule,
     MatSlideToggleModule,
     MatCardModule,
+    MatTableModule,
     MatSelectModule,
     DragDropModule,
     NgxWebstorageModule.forRoot(),
