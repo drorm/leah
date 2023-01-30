@@ -84,10 +84,15 @@ export class LeahContentComponent {
     }
   }
 
-  async handleRequest(request: string) {
-    if (this.currentPrompt.prefix) {
+  /**
+   * Send the request to chatGPT and speak the response.
+   * @param request The request to send to chatGPT
+   * @param doPrefix If true, add the prefix to the request
+   */
+  async handleRequest(request: string, doPrefix = true) {
+    if (this.currentPrompt && this.currentPrompt.prefix && doPrefix) {
       request = `${this.currentPrompt.prefix} ${request}\n`;
-      this.logger.info('request with prefix', request);
+      this.logger.debug('request with prefix', request);
     }
     await this.gptPage.sendMessage(request);
     this.setStatus('Waiting for bot');
@@ -168,7 +173,8 @@ export class LeahContentComponent {
       this.logger.debug('myPrompt:', myPrompt);
       if (myPrompt && myPrompt[0]) {
         this.currentPrompt = myPrompt[0];
-        await this.handleRequest(this.currentPrompt.body);
+        // send the prompt but do not prefix it
+        await this.handleRequest(this.currentPrompt.body, false);
       }
     }
   }
