@@ -9,6 +9,8 @@ import { SettingsService } from '../settings/settings.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 
+const WAITING = 'press the red button to start';
+
 @Component({
   selector: 'custom-leah-content',
   templateUrl: './leah-content.component.html',
@@ -30,7 +32,7 @@ export class LeahContentComponent {
   currentPrompt: any = null;
   dictation: any; // Current dictation
   voices: any;
-  status = 'Press the red button to start';
+  status = WAITING;
   userSettings: any;
 
   constructor(
@@ -69,6 +71,7 @@ export class LeahContentComponent {
         // This will also catch 'No speech was detected, try again' which is not really an error
         this.logger.error(err);
         this.listening = false;
+        this.setStatus(WAITING);
         alert(err);
         return;
       }
@@ -81,10 +84,15 @@ export class LeahContentComponent {
     }
   }
 
-  async handleRequest(request: string) {
-    if (this.currentPrompt.prefix) {
+  /**
+   * Send the request to chatGPT and speak the response.
+   * @param request The request to send to chatGPT
+   * @param doPrefix If true, add the prefix to the request
+   */
+  async handleRequest(request: string, doPrefix = true) {
+    if (this.currentPrompt && this.currentPrompt.prefix && doPrefix) {
       request = `${this.currentPrompt.prefix} ${request}\n`;
-      this.logger.info('request with prefix', request);
+      this.logger.debug('request with prefix', request);
     }
     await this.gptPage.sendMessage(request);
     this.setStatus('Waiting for bot');
@@ -135,6 +143,7 @@ export class LeahContentComponent {
     this.conversing = false;
     this.listening = false;
     await this.voiceService.stop();
+    this.setStatus(WAITING);
   }
 
   settings() {
@@ -164,7 +173,8 @@ export class LeahContentComponent {
       this.logger.debug('myPrompt:', myPrompt);
       if (myPrompt && myPrompt[0]) {
         this.currentPrompt = myPrompt[0];
-        await this.handleRequest(this.currentPrompt.body);
+        // send the prompt but do not prefix it
+        await this.handleRequest(this.currentPrompt.body, false);
       }
     }
   }
