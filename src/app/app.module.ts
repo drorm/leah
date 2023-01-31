@@ -24,6 +24,8 @@ import { createCustomElement } from '@angular/elements';
 import { LeahContentComponent } from './leah-content/leah-content.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PromptsComponent } from './prompts/prompts.component';
+import { CreatePromptDialog } from './prompts/create-prompt-dialog';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { PromptsComponent } from './prompts/prompts.component';
     LeahContentComponent,
     SettingsComponent,
     PromptsComponent,
+    CreatePromptDialog,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { PromptsComponent } from './prompts/prompts.component';
     MatTableModule,
     MatSelectModule,
     DragDropModule,
+    FormsModule,
     NgxWebstorageModule.forRoot(),
     LoggerModule.forRoot({
       level: NgxLoggerLevel.INFO,
