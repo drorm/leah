@@ -1,0 +1,66 @@
+<mat-dialog-content>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <input
+      type="text"
+      class="form-control"
+      id="type"
+      [(ngModel)]="newPrompt.type"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      [(ngModel)]="newPrompt.title"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="body">Body</label>
+    <input
+      type="text"
+      class="form-control"
+      id="body"
+      [(ngModel)]="newPrompt.body"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="listenVoice">ListenVoice</label>
+    <input
+      type="text"
+      class="form-control"
+      id="listenVoice"
+      [(ngModel)]="newPrompt.listenVoice"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="speakVoice">SpeakVoice</label>
+    <input
+      type="text"
+      class="form-control"
+      id="speakVoice"
+      [(ngModel)]="newPrompt.speakVoice"
+    />
+  </div>
+  <div class="form-group">
+    <label for="prefix">Prefix</label>
+    <input
+      type="text"
+      class="form-control"
+      id="prefix"
+      [(ngModel)]="newPrompt.prefix"
+    />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newPrompt" cdkFocusInitial>
+    Submit
+  </button>
+</mat-dialog-actions>
