@@ -16,6 +16,8 @@
 let scr = document.createElement('script');
 scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('runtime.js');
+scr.async = false;
+scr.defer = false;
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
@@ -27,6 +29,8 @@ try {
 scr = document.createElement('script');
 scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('polyfills.js');
+scr.async = false;
+scr.defer = false;
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
@@ -37,6 +41,8 @@ try {
 scr = document.createElement('script');
 scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('main.js');
+scr.async = false;
+scr.defer = false;
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
