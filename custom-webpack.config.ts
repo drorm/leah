@@ -5,4 +5,5 @@ module.exports = {
     background: { import: 'src/background.ts', runtime: false },
     content: { import: 'src/content.ts', runtime: false },
   },
+//  devtool: 'inline-source-map'
 } as Configuration;
