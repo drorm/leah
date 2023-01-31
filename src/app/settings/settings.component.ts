@@ -5,7 +5,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import * as version from '../version';
-import { prompt, SettingsService } from './settings.service';
+import { Prompt, SettingsService } from './settings.service';
 import { langs } from './listenLangs';
 import { defaultPrompts } from './prompts';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
@@ -96,7 +96,7 @@ export class SettingsComponent implements OnInit {
   onPromptSelect(event: any) {
     this.settingsService.setUserSetting('chosenPrompt', event.value);
     const myPrompt = this.settingsService.userSettings.prompts.filter(
-      (pr: prompt) => pr.title === event.value
+      (pr: Prompt) => pr.title === event.value
     )[0];
     this.logger.debug(myPrompt);
     this.settingsService.setUserSetting('listenLang', myPrompt.listenVoice);
