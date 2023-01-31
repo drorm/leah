@@ -16,29 +16,38 @@
 let scr = document.createElement('script');
 scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('runtime.js');
+scr.async = false;
+scr.defer = false;
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
-  console.log(e);
+  console.error('error in loading runtime.js');
+  console.error(e);
 }
 
 // Lazy copy and paste, but clearer
 scr = document.createElement('script');
 scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('polyfills.js');
+scr.async = false;
+scr.defer = false;
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
-  console.log(e);
+  console.error('error in loading polyfills.js');
+  console.error(e);
 }
 
 scr = document.createElement('script');
 scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('main.js');
+scr.async = false;
+scr.defer = false;
 try {
   (document.head || document.documentElement).appendChild(scr);
 } catch (e) {
-  console.log(e);
+  console.error('error in loading main.js');
+  console.error(e);
 }
 
 // Inject the CSS into the page

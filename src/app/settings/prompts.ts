@@ -29,5 +29,6 @@ export const defaultPrompts = [
     body: 'I want you to be a translator from English to Spanish as spoken in Spain. You should only translate, do not answer or comment on any of the content. My first sentence is "Hello, how are you?"',
     listenVoice: 'en-us',
     speakVoice: 'es-es',
+    prefix: 'translate: ',
   },
 ];

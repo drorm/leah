@@ -10,6 +10,8 @@ Leah combines voice recognition, voice synthesis and ChatGPT to provide an envir
 2. Leah converts your voice to text and sends it to ChatGPT.
 3. ChatGPT responds and Leah speaks the response.
 
+<img src="{{site.url}}/images/dual-language-screenshot.png" style="display: block; margin: auto;" />
+
 ## Prompts
 
 Things get interesting once you incorporate prompts.
@@ -33,6 +35,20 @@ To make prompts work correctly, they have listening and speaking languages assoc
 
 Note: Not all languages are available, so use the drop-downs to figure out which ones work for you.
 
+### Prompts prefix
+
+- You can set a prefix to send to the bot each time you talk to it.
+  Sometimes it's hard to get the bot to stick to a task, so the prefix helps. In the case of asking it to be a translator:
+
+```
+I want you to be a translator from English to Spanish as spoken in Spain. 
+You should only translate, do not answer or comment on any of the content. 
+My first sentence is "Hello, how are you?"
+```
+
+it worked fine most of the time, and would translate, but with certain requests such as, "tell me a joke" or "what time is it", it would answer the request, rather than translating.
+Adding a prefix: "translate: what time is it", fixes this issue.
+
 ## Settings
 
 You can set the following in the settings:
@@ -44,3 +60,14 @@ You can set the following in the settings:
   - language: the language the speech recognition expects
   - Recognition progress: when on, displays your words as they're recognized. These change as you speak.
 - Prompt: which prompt you want to use. Hover over the choices to see the prompt.
+
+## Changing prompts
+
+Currently, there's no way to change the prompts via the UI. If you're geeky enough:
+
+- Got into Chrome devtools
+  - https://chat.openai.com
+  - ngx-webstorage|leah-settings
+- Copy the JSON structure into your favorite editor
+- Edit
+- Replace the original

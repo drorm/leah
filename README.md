@@ -1,4 +1,4 @@
-# Leah: Language Educator And Helper
+# Leah: ChatGPT Language Educator And Helper
 
 ## Overview
 
@@ -7,7 +7,7 @@ _Leah works only on https://chat.openai.com/chat_.
 
 ## Installation
 
-In Google Chrome go to XXX and install the extension
+In Google Chrome go to the [Chrome web store](https://chrome.google.com/webstore/detail/leah-language-educator-an/bolaopgaickihobdlddefmdffopigkmh) and install the extension.
 
 ## Use
 
@@ -18,7 +18,7 @@ Read [the docs](https://drorm.github.io/leah/).
 1. Clone this repo
 2. Run yarn install
 3. cd contenets
-4. npm run dev
+4. npm run dev or npm run build
 5. In Chrome, go to chrome://extensions/, click **Load unpacked** and point at the contents/dist directory.
 
 ## Repo structure and extension architecture

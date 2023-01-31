@@ -18,6 +18,7 @@ export interface prompt {
   body: string;
   listenVoice: string;
   speakVoice: string;
+  prefix?: string;
 }
 
 @Injectable({
