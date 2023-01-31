@@ -1,6 +1,10 @@
+<button id="add" mat-fab color="primary" (click)="add()">
+  <mat-icon aria-label="add">add</mat-icon>
+</button>
+
 <table mat-table [dataSource]="prompts" class="mat-elevation-z8">
   <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <th mat-header-cell *matHeaderCellDef>Type 1243</th>
     <td mat-cell *matCellDef="let element">{{element.type}}</td>
   </ng-container>
 
@@ -33,4 +37,13 @@
     (click)="selectedRow = row"
     [ngClass]="{ 'highlight': row === selectedRow }"
   ></tr>
+
+  <!-- add a single '+' button to add a new row -->
+  <tr mat-row *matRowDef="let row; columns: ['add']">
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button (click)="add()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </td>
+  </tr>
 </table>
