@@ -18,7 +18,6 @@ scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('runtime.js');
 try {
   (document.head || document.documentElement).appendChild(scr);
-  console.error('runtime.js injected');
 } catch (e) {
   console.error('error in loading runtime.js');
   console.error(e);
@@ -30,7 +29,6 @@ scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('polyfills.js');
 try {
   (document.head || document.documentElement).appendChild(scr);
-  console.error('polyfills.js injected');
 } catch (e) {
   console.error('error in loading polyfills.js');
   console.error(e);
@@ -41,7 +39,6 @@ scr.type = 'text/javascript';
 scr.src = chrome.runtime.getURL('main.js');
 try {
   (document.head || document.documentElement).appendChild(scr);
-  console.error('main.js injected');
 } catch (e) {
   console.error('error in loading main.js');
   console.error(e);
@@ -60,4 +57,3 @@ const html3 = `
 const div = document.createElement('div');
 div.innerHTML = html3;
 document.body.insertBefore(div, document.body.firstChild);
-console.error('content.ts injected');
