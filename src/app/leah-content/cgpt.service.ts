@@ -18,6 +18,7 @@ import { NGXLogger } from 'ngx-logger';
 export class CgptService {
   textarea: any; // Textarea where the requests are sent
   totalMessages = 0; // total responses from the bot
+  sentencesSpoken = 0; // total responses from the bot
   constructor(private logger: NGXLogger) {}
 
   async init() {
@@ -79,26 +80,46 @@ export class CgptService {
    */
   async getMessage() {
     let submit: any;
-    let text = '';
+    let text: string | undefined = '';
     this.logger.debug('waiting for submit');
     await this.sleep(1000);
     // limit the number of tries so we're not stuck in this loop
     for (let ii = 0; ii < 100; ii++) {
-      submit = await $('textarea ~ button:enabled');
-      if (submit.length > 0) {
-        this.logger.debug('got submit');
-        const pageElements = $("div[class*='text-base']").toArray();
-        const numElements = pageElements.length;
-        // first let's find the new element
-        this.logger.debug('totalMessages', this.totalMessages);
-        if (numElements > this.totalMessages) {
-          const response = pageElements.pop();
-          this.logger.debug(`found an element: ${response}`);
-          if (response) {
-            this.totalMessages = pageElements.length;
-            text = response.innerText;
-            this.logger.debug('text:', text);
-            return text; // Found it
+      const pageElements = $("div[class*='text-base']").toArray();
+      const numElements = pageElements.length;
+      // first let's find the new element
+      this.logger.info('totalMessages', this.totalMessages);
+      if (numElements > this.totalMessages) {
+        const response = pageElements.pop();
+        text = response?.innerText;
+        this.logger.info('found an element:', text);
+        if (text && text.length > 0) {
+          const lines = text.split('\n');
+          let sentences = lines.filter((line) => line.length > 0); //
+          // if there's more than one sentence,
+          // and we haven't spoken it yet, we'll speak the last one
+          if (sentences.length > 1 && sentences.length > this.sentencesSpoken) {
+            this.logger.info(
+              // We want to have a new sentence beore we speak the previous one
+              'speak sentence:',
+              sentences[sentences.length - 2]
+            );
+          }
+          this.sentencesSpoken = sentences.length;
+          submit = await $('textarea ~ button:enabled');
+          if (submit.length > 0) {
+            this.logger.info('got submit');
+            if (response) {
+              this.logger.info(
+                // We speak the last sentence, since we know we're done
+                'speak sentence:',
+                sentences[sentences.length - 1]
+              );
+              this.totalMessages = pageElements.length;
+              text = response.innerText;
+              this.logger.info('text:', text);
+              return text; // Found it
+            }
           }
         }
       }
