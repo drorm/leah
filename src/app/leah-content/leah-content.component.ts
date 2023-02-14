@@ -96,11 +96,11 @@ export class LeahContentComponent {
     }
     await this.gptPage.sendMessage(request);
     this.setStatus('Waiting for bot');
-    const response = await this.gptPage.getMessage();
+    const response = await this.gptPage.getMessage(this);
     this.logger.debug('response', response);
     if (response) {
-      this.setStatus('Bot is speaking');
-      await this.speak(response);
+      // this.setStatus('Bot is speaking');
+      //  await this.speak(response);
     }
     this.logger.debug('done speaking', response);
   }
@@ -108,9 +108,11 @@ export class LeahContentComponent {
   ngAfterViewInit() {}
 
   async speak(text: string) {
+    this.setStatus('Bot is speaking');
     this.speaking = true;
     await this.speechService.speak(text);
     this.speaking = false;
+    this.setStatus('');
   }
 
   async run() {

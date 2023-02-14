@@ -7,6 +7,8 @@
 import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
 import { NGXLogger } from 'ngx-logger';
+// This module can only be referenced with ECMAScript imports/exports by turning on the 'allowSyntheticDefaultImports' flag and referencing its default export.
+import LanguageDetect from 'languagedetect';
 
 /**
  * Adapted from https://github.com/taranjeet/chatgpt-api/blob/main/server.py
@@ -20,6 +22,7 @@ export class CgptService {
   totalMessages = 0; // total responses from the bot
   sentencesSpoken = 0; // total responses from the bot
   constructor(private logger: NGXLogger) {}
+  languageDetect = new LanguageDetect();
 
   async init() {
     await this.getTextArea();
@@ -29,6 +32,7 @@ export class CgptService {
       );
       return;
     } else {
+      this.languageDetect.setLanguageType('iso2');
       this.logger.debug('Logged in to ChatGPT');
     }
   }
@@ -78,7 +82,7 @@ export class CgptService {
   /**
    * get the last message that the bot sent, the response to our last requests.
    */
-  async getMessage() {
+  async getMessage(leah: any) {
     let submit: any;
     let text: string | undefined = '';
     this.logger.debug('waiting for submit');
@@ -99,22 +103,15 @@ export class CgptService {
           // if there's more than one sentence,
           // and we haven't spoken it yet, we'll speak the last one
           if (sentences.length > 1 && sentences.length > this.sentencesSpoken) {
-            this.logger.info(
-              // We want to have a new sentence beore we speak the previous one
-              'speak sentence:',
-              sentences[sentences.length - 2]
-            );
+            const currentSentence = sentences[sentences.length - 2];
+            await this.speakSentence(currentSentence, leah);
           }
           this.sentencesSpoken = sentences.length;
           submit = await $('textarea ~ button:enabled');
           if (submit.length > 0) {
             this.logger.info('got submit');
             if (response) {
-              this.logger.info(
-                // We speak the last sentence, since we know we're done
-                'speak sentence:',
-                sentences[sentences.length - 1]
-              );
+              await this.speakSentence(sentences[sentences.length - 1], leah);
               this.totalMessages = pageElements.length;
               text = response.innerText;
               this.logger.info('text:', text);
@@ -127,6 +124,22 @@ export class CgptService {
       await this.sleep(1000);
     }
     return ''; // Didn't get a response
+  }
+
+  /**
+   * Speak a single sentence
+   * @param sentence
+   */
+  async speakSentence(sentence: string, leah: any) {
+    const lang = this.languageDetect.detect(sentence, 1)[0][0];
+    this.logger.info(
+      // We want to have a new sentence beore we speak the previous one
+      'speak sentence:',
+      sentence,
+      'language:',
+      lang
+    );
+    await leah.speak(sentence);
   }
 
   sleep(ms: number) {
