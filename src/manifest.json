@@ -1,6 +1,6 @@
 {
   "name": "Leah: Language Educator And Helper",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Leah: Language learning tool that uses voice and ChatGPT to help you improve your foreign language skills with prompts",
   "manifest_version": 3,
   "background": {
