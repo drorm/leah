@@ -35,12 +35,10 @@ export class PromptsComponent {
     private dialog: MatDialog,
     private logger: NGXLogger
   ) {
-    this.logger.trace('PromptsComponent constructor');
-    this.logger.info('PromptsComponent', this.prompts);
+    this.logger.debug('PromptsComponent', this.prompts);
   }
 
   add() {
-    this.logger.trace('PromptsComponent add');
     // open a dialog to create a new prompt
     const dialogRef = this.dialog.open(CreatePromptDialog, {
       data: {
@@ -55,7 +53,6 @@ export class PromptsComponent {
       this.logger.trace('The dialog was closed', result);
       if (result) {
         this.prompts.push(result);
-        this.logger.info('PromptsComponent', this.prompts);
       }
     });
   }
