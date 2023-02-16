@@ -1,17 +1,11 @@
-import { Component } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { DataSource } from '@angular/cdk/table';
+import { Component, ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material/table';
 import { SettingsService } from '../settings/settings.service';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { MatDialog } from '@angular/material/dialog';
 import { CreatePromptDialog } from './create-prompt-dialog';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { MatTableDataSource } from '@angular/material/table';
+import { Prompt } from '../settings/settings.service';
 
 @Component({
   selector: 'custom-prompts',
@@ -19,16 +13,10 @@ export interface PeriodicElement {
   styleUrls: ['./prompts.component.css'],
 })
 export class PromptsComponent {
-  displayedColumns: string[] = [
-    'type',
-    'title',
-    'body',
-    'listenVoice',
-    'speakVoice',
-  ];
+  displayedColumns: string[] = ['type', 'title', 'body', 'listenVoice', 'speakVoice'];
   prompts = this.settingsService.userSettings.prompts;
-  dataSource = this.prompts;
   selectedRow: any;
+  @ViewChild(MatTable) table!: MatTable<Prompt>;
 
   constructor(
     private settingsService: SettingsService,
@@ -49,10 +37,13 @@ export class PromptsComponent {
         speakVoice: '',
       },
     });
+
     dialogRef.afterClosed().subscribe((result) => {
-      this.logger.trace('The dialog was closed', result);
       if (result) {
+        result['type'] = 'user';
         this.prompts.push(result);
+        this.table.renderRows();
+        this.settingsService.setUserSetting('prompts', this.prompts);
       }
     });
   }
