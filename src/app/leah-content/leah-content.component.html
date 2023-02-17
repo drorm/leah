@@ -42,8 +42,9 @@
 
         <button
           mat-button
-          title="Change the app's settings"
+          title="Settings (CTRL-ALT-S)"
           (click)="settings()"
+          (document:keydown.control.alt.S)="settings()"
         >
           <mat-icon mat-list-icon>settings</mat-icon>
         </button>
