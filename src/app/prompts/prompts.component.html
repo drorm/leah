@@ -1,6 +1,13 @@
-<button id="add" mat-raised-button color="primary" (click)="add()">
-  Create
-</button>
+<div class="row">
+  <div class="col-md-5">
+    <h2>Manage Prompts</h2>
+  </div>
+  <div class="col-md-7">
+    <button id="add" mat-raised-button color="primary" (click)="add()">
+      Create
+    </button>
+  </div>
+</div>
 
 <table mat-table [dataSource]="prompts" class="mat-elevation-z8">
   <ng-container matColumnDef="type">
@@ -49,5 +56,4 @@
     (click)="selectedRow = row"
     [ngClass]="{ 'highlight': row === selectedRow }"
   ></tr>
-
 </table>
