@@ -1,5 +1,5 @@
-<button id="add" mat-fab color="primary" (click)="add()">
-  <mat-icon aria-label="add">add</mat-icon>
+<button id="add" mat-raised-button color="primary" (click)="add()">
+  Create
 </button>
 
 <table mat-table [dataSource]="prompts" class="mat-elevation-z8">
@@ -30,6 +30,18 @@
     <td mat-cell *matCellDef="let element">{{element.speakVoice}}</td>
   </ng-container>
 
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="edit(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="delete(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr
     mat-row
@@ -38,8 +50,4 @@
     [ngClass]="{ 'highlight': row === selectedRow }"
   ></tr>
 
-  <!-- add a single '+' button to add a new row -->
-      <button mat-icon-button (click)="add()">
-        <mat-icon>add</mat-icon>
-      </button>
 </table>

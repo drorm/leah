@@ -36,91 +36,104 @@ export class CreatePromptDialog {
   };
   listenLangs = [{}];
   speechLangs = [{}];
+  isUpdate = false;
 
   constructor(
     private logger: NGXLogger,
     public dialogRef: MatDialogRef<CreatePromptDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Prompt
   ) {
+    if (data.title !== '') {
+      this.model = data;
+      this.isUpdate = true;
+    }
     this.init();
   }
 
   async init() {
     // Setup the langues structure for the select boxes
-		langs.forEach((lang: any) => {
-			this.listenLangs.push({ label: lang[0], value: lang[1] });
-		});
+    langs.forEach((lang: any) => {
+      this.listenLangs.push({ label: lang[0], value: lang[1] });
+    });
     // we can just get the voices since we've already loaded them once in speech.service.ts
     const slangs = window.speechSynthesis.getVoices();
     slangs.forEach((lang: any) => {
       this.speechLangs.push({ label: lang.name, value: lang.lang });
     });
 
-		this.fields = [
-			{
-				key: 'title',
-				type: 'input',
-				templateOptions: {
-					type: 'string',
-					label: 'Title',
-					placeholder: 'Enter the title',
-					required: true,
-				},
-			},
-			{
-				key: 'body',
-				type: 'textarea',
-				templateOptions: {
-					rows: 5,
-					autosize: true,
-					label: 'Body',
-					placeholder: 'Enter the prompt',
-					required: true,
-				},
-			},
-			{
-				key: 'listenVoice',
-				type: 'select',
-				templateOptions: {
-					options: this.listenLangs,
-					label: 'Listen Voice',
-					placeholder: 'Enter the listen voice',
-					required: true,
-				},
-			},
-			{
-				key: 'speakVoice',
-				type: 'select',
-				templateOptions: {
+    this.fields = [
+      {
+        key: 'title',
+        type: 'input',
+        templateOptions: {
+          type: 'string',
+          label: 'Title',
+          placeholder: 'Enter the title',
+          required: true,
+        },
+      },
+      {
+        key: 'body',
+        type: 'textarea',
+        templateOptions: {
+          rows: 5,
+          autosize: true,
+          label: 'Body',
+          placeholder: 'Enter the prompt',
+          required: true,
+        },
+      },
+      {
+        key: 'listenVoice',
+        type: 'select',
+        templateOptions: {
+          options: this.listenLangs,
+          label: 'Listen Voice',
+          placeholder: 'Enter the listen voice',
+          required: true,
+        },
+      },
+      {
+        key: 'speakVoice',
+        type: 'select',
+        templateOptions: {
           options: this.speechLangs,
-					label: 'Speak Voice',
-					placeholder: 'Enter the speaking voice',
-					required: true,
-				},
-			},
-			{
-				key: 'prefix',
-				type: 'input',
-				templateOptions: {
-					type: 'input',
-					label: 'Prefix',
-					placeholder: 'Optional prefix added before each question',
-					required: false,
-				},
-			},
-		];
-	}
+          label: 'Speak Voice',
+          placeholder: 'Enter the speaking voice',
+          required: true,
+        },
+      },
+      {
+        key: 'prefix',
+        type: 'input',
+        templateOptions: {
+          type: 'input',
+          label: 'Prefix',
+          placeholder: 'Optional prefix added before each question',
+          required: false,
+        },
+      },
+    ];
 
-	create() {
-		this.dialogRef.close(this.model);
-	}
+    // On update
+    if (this.isUpdate) {
+      // when editing a prompt, we want to set the default value for the speakVoice and listenVoice select boxes
+      // to the current value of the prompt
+      this.fields[2].defaultValue = this.model.listenVoice;
+      this.fields[3].defaultValue = this.model.speakVoice;
+    }
+  }
 
-	cancel(): void {
-		this.dialogRef.close();
-	}
+  create() {
+    this.dialogRef.close(this.model);
+  }
 
-	onNoClick(): void {
-		this.dialogRef.close();
-	}
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }
 //
