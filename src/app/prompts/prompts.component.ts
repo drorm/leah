@@ -71,6 +71,10 @@ export class PromptsComponent {
   }
 
   delete(element: Prompt) {
+    if (!confirm(`Are you sure you want to delete '${element.title}'?`)) {
+      return;
+    }
+
     // delete the selected prompt
     // this.prompts.splice(this.selectedRow.index, 1);
     this.prompts = this.prompts.filter((item: Prompt) => item !== element);
