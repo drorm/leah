@@ -1,6 +1,6 @@
 <div class="dialog-container signup-form">
   <mat-dialog-content>
-    <h5 mat-dialog-title>Create Prompt</h5>
+    <h5 mat-dialog-title>{{isUpdate ? 'Update' : 'Create'}} Prompt</h5>
     <form class="mat-dialog-content" #formControl="ngForm" [formGroup]="form">
       <formly-form
         [form]="form"
@@ -15,7 +15,7 @@
           color="primary"
           (click)="create()"
         >
-          Create
+          {{isUpdate ? 'Update' : 'Create'}}
         </button>
         <button
           mat-raised-button

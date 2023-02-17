@@ -13,7 +13,14 @@ import { Prompt } from '../settings/settings.service';
   styleUrls: ['./prompts.component.css'],
 })
 export class PromptsComponent {
-  displayedColumns: string[] = ['type', 'title', 'body', 'listenVoice', 'speakVoice'];
+  displayedColumns: string[] = [
+    'actions',
+    'type',
+    'title',
+    'body',
+    'listenVoice',
+    'speakVoice',
+  ];
   prompts = this.settingsService.userSettings.prompts;
   selectedRow: any;
   @ViewChild(MatTable) table!: MatTable<Prompt>;
@@ -46,5 +53,28 @@ export class PromptsComponent {
         this.settingsService.setUserSetting('prompts', this.prompts);
       }
     });
+  }
+
+  edit(element: Prompt) {
+    // open a dialog to edit the selected prompt
+    const dialogRef = this.dialog.open(CreatePromptDialog, {
+      data: element,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.prompts[this.selectedRow.index] = result;
+        this.table.renderRows();
+        this.settingsService.setUserSetting('prompts', this.prompts);
+      }
+    });
+  }
+
+  delete(element: Prompt) {
+    // delete the selected prompt
+    // this.prompts.splice(this.selectedRow.index, 1);
+    this.prompts = this.prompts.filter((item: Prompt) => item !== element);
+    this.table.renderRows();
+    // this.settingsService.setUserSetting('prompts', this.prompts);
   }
 }
