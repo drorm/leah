@@ -36,7 +36,7 @@ document.body.appendChild(div);
 function appendScript(src: string) {
   const script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = chrome.runtime.getURL('src');
+  script.src = chrome.runtime.getURL(src);
   script.async = false;
   script.defer = false;
   try {
@@ -49,5 +49,5 @@ function appendScript(src: string) {
 
 appendScript('runtime.js');
 appendScript('polyfills.js');
-appendScript('main.js');
 appendScript('vendor.js');
+appendScript('main.js');
