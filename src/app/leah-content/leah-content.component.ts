@@ -5,6 +5,7 @@ import { SpeechService } from './speech.service';
 import { UtilService } from './util.service';
 import { NGXLogger } from 'ngx-logger';
 import { SettingsComponent } from '../settings/settings.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import { SettingsService } from '../settings/settings.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
@@ -53,6 +54,7 @@ export class LeahContentComponent {
     this.userSettings = this.settingsService.userSettings;
     this.logger.debug('userSettings', this.userSettings);
     await this.speechService.init();
+    await this.versionCheck();
     this.voices = await this.speechService.getVoices();
     await this.gptPage.init();
     await UtilService.sleep(250);
@@ -177,5 +179,15 @@ export class LeahContentComponent {
         await this.handleRequest(this.currentPrompt.body, false);
       }
     }
+  }
+
+  async versionCheck() {
+    const versionStatus = this.settingsService.getVersionStatus();
+    await this.dialog.open(DialogComponent, {
+      data: {
+        message: `Hello, I am Leah. Version Status: ${versionStatus}. `,
+        title: 'Welcome',
+      },
+    });
   }
 }
