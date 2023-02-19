@@ -6,7 +6,7 @@ import { UtilService } from './util.service';
 import { NGXLogger } from 'ngx-logger';
 import { SettingsComponent } from '../settings/settings.component';
 import { DialogComponent } from '../dialog/dialog.component';
-import { SettingsService } from '../settings/settings.service';
+import { SettingsService, VersionStatus } from '../settings/settings.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 
@@ -183,11 +183,11 @@ export class LeahContentComponent {
 
   async versionCheck() {
     const versionStatus = this.settingsService.getVersionStatus();
+    if (versionStatus === VersionStatus.NOCHANGE) {
+      return; // No change, no need to show the dialog
+    }
     await this.dialog.open(DialogComponent, {
-      data: {
-        message: `Hello, I am Leah. Version Status: ${versionStatus}. `,
-        title: 'Welcome',
-      },
+      data: { type: versionStatus },
     });
   }
 }

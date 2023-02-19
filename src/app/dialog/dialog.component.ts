@@ -14,7 +14,7 @@ import { NGXLogger } from 'ngx-logger';
   styleUrls: ['./dialog.component.css'],
 })
 export class DialogComponent {
-  message: string;
+  type: string;
   constructor(
     // public dialogRef: MatDialogRef<DialogComponent>,
     // private settingsService: SettingsService,
@@ -22,8 +22,7 @@ export class DialogComponent {
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.logger.info('DialogComponent', data);
-    this.message = data['message'];
+    this.type = data['type'];
   }
   done() {
     this.dialogRef.close();
