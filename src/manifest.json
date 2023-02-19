@@ -19,10 +19,12 @@
         "main.js",
         "polyfills.js",
         "runtime.js",
+        "vendor.js",
         "styles.css",
         "main.js.map",
         "polyfills.js.map",
         "runtime.js.map",
+        "vendor.js.map",
         "content.js.map"
       ],
       "matches": ["https://chat.openai.com/*"]

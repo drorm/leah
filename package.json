@@ -7,7 +7,7 @@
     "build": "ng build",
     "olddev": "/* seems to break the build*/ node --max_old_space_size=8192 node_modules/.bin/ng build --watch --named-chunks --vendor-chunk --source-map",
     "devmaps": "node --max_old_space_size=8192 node_modules/.bin/ng build --watch --named-chunks --source-map",
-    "dev": "node --max_old_space_size=8192 node_modules/.bin/ng build --watch --named-chunks",
+    "dev": "node --max_old_space_size=16382 node_modules/.bin/ng build --watch --named-chunks --vendor-chunk",
     "test": "ng test"
   },
   "private": true,
