@@ -25,6 +25,7 @@ import { createCustomElement } from '@angular/elements';
 
 import { LeahContentComponent } from './leah-content/leah-content.component';
 import { SettingsComponent } from './settings/settings.component';
+import { DialogComponent } from './dialog/dialog.component';
 import { PromptsComponent } from './prompts/prompts.component';
 import { CreatePromptDialog } from './prompts/create-prompt-dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     LeahContentComponent,
     SettingsComponent,
+    DialogComponent,
     PromptsComponent,
     CreatePromptDialog,
   ],
