@@ -76,9 +76,8 @@ export class PromptsComponent {
     }
 
     // delete the selected prompt
-    // this.prompts.splice(this.selectedRow.index, 1);
     this.prompts = this.prompts.filter((item: Prompt) => item !== element);
     this.table.renderRows();
-    // this.settingsService.setUserSetting('prompts', this.prompts);
+    this.settingsService.setUserSetting('prompts', this.prompts);
   }
 }
