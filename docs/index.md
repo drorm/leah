@@ -26,6 +26,14 @@ Things get interesting once you incorporate prompts.
 - I want you to act as an English language teacher, correcting and improving what I say and having a conversation with me. The corrected part should be between ``` to distinguish it from the conversation. I want you to only reply with the correction, the improvements, and nothing else, do not write explanations. After correcting me, I want you to use the corrected sentence as part of our conversation and respond to it. Keep the corrections and explanations brief and the language simple at the A1 CEFR level, but keep the conversation flowing. For instance: me: Hello, you good you: '''Hello, how are you doing?''' I'm doing fine, how are you? My first sentence is: 'you good today'.
 - I want you to be a translator from English to Spanish as spoken in Spain. You should only translate, do not answer or comment on any of the content. My first sentence is "Hello, how are you?"
 
+## Creating, updating and deleting prompts
+
+Underneath the prompts drop down there's a table of the existing prompts.
+
+- Click on _Create_ to create a new prompt
+- Click on the _Edit_ (Pencil) icon to update a prompt
+- Click on the _Delete_ (Garbage) icon to delete a prompt
+
 ### Prompts languages
 
 To make prompts work correctly, they have listening and speaking languages associated with them. So for the last one, the translator from English to Spanish, they are:
@@ -41,8 +49,8 @@ Note: Not all languages are available, so use the drop-downs to figure out which
   Sometimes it's hard to get the bot to stick to a task, so the prefix helps. In the case of asking it to be a translator:
 
 ```
-I want you to be a translator from English to Spanish as spoken in Spain. 
-You should only translate, do not answer or comment on any of the content. 
+I want you to be a translator from English to Spanish as spoken in Spain.
+You should only translate, do not answer or comment on any of the content.
 My first sentence is "Hello, how are you?"
 ```
 
@@ -60,14 +68,3 @@ You can set the following in the settings:
   - language: the language the speech recognition expects
   - Recognition progress: when on, displays your words as they're recognized. These change as you speak.
 - Prompt: which prompt you want to use. Hover over the choices to see the prompt.
-
-## Changing prompts
-
-Currently, there's no way to change the prompts via the UI. If you're geeky enough:
-
-- Got into Chrome devtools
-  - https://chat.openai.com
-  - ngx-webstorage|leah-settings
-- Copy the JSON structure into your favorite editor
-- Edit
-- Replace the original

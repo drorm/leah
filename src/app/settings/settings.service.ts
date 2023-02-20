@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { LocalStorageService } from 'ngx-webstorage';
 import { defaultPrompts } from './prompts';
+import * as version from '../version';
 
 const SETTINGS = 'Leah-settings';
 
@@ -21,11 +22,19 @@ export interface Prompt {
   prefix?: string;
 }
 
+export enum VersionStatus {
+  NEW = 'new',
+  NOCHANGE = 'nochange',
+  UPGRADE = 'upgrade',
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
   public static readonly PROMPT_NONE = 'none';
+  currentVersion = version.vars.version;
+  versionStatus: VersionStatus = VersionStatus.NOCHANGE;
 
   userSettings: any = {
     readSentence: true,
@@ -36,6 +45,7 @@ export class SettingsService {
     recognitionProgress: true,
     prompts: [],
     chosenPrompt: 'none',
+    version: '',
   };
 
   // prettier-ignore
@@ -65,7 +75,16 @@ export class SettingsService {
         }
       }
       this.userSettings = settings;
+      if (this.userSettings.version !== this.currentVersion) {
+        // This is an upgrade. Technically, it could be a downgrade, but we don't care
+        this.versionStatus = VersionStatus.UPGRADE;
+      }
+    } else {
+      // This is the first time the app has been run
+      this.versionStatus = VersionStatus.NEW;
     }
+    this.logger.debug('version status:', this.versionStatus);
+    this.userSettings.version = this.currentVersion;
     this.storage.store(SETTINGS, this.userSettings); // In case it's the first time
     this.logger.debug('new settings:', this.userSettings);
   }
@@ -77,5 +96,9 @@ export class SettingsService {
 
   ngOnInit() {
     this.load();
+  }
+
+  getVersionStatus(): VersionStatus {
+    return this.versionStatus;
   }
 }
