@@ -1,0 +1,31 @@
+<div class="dialog-container signup-form">
+  <mat-dialog-content>
+    <h5 mat-dialog-title>{{isUpdate ? 'Update' : 'Create'}} Prompt</h5>
+    <form class="mat-dialog-content" #formControl="ngForm" [formGroup]="form">
+      <formly-form
+        [form]="form"
+        [fields]="fields"
+        [model]="model"
+      ></formly-form>
+      <div class="error">{{ error }}</div>
+      <div mat-dialog-actions>
+        <button
+          [disabled]="!formControl.valid"
+          mat-raised-button
+          color="primary"
+          (click)="create()"
+        >
+          {{isUpdate ? 'Update' : 'Create'}}
+        </button>
+        <button
+          mat-raised-button
+          (click)="cancel()"
+          color="basic"
+          tabindex="-1"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</div>

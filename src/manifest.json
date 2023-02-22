@@ -1,6 +1,6 @@
 {
   "name": "Leah: Language Educator And Helper",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Leah: Language learning tool that uses voice and ChatGPT to help you improve your foreign language skills with prompts",
   "manifest_version": 3,
   "background": {
@@ -9,7 +9,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://chat.openai.com/chat"],
+      "matches": ["https://chat.openai.com/chat*"],
       "js": ["content.js"]
     }
   ],
@@ -19,10 +19,12 @@
         "main.js",
         "polyfills.js",
         "runtime.js",
+        "vendor.js",
         "styles.css",
         "main.js.map",
         "polyfills.js.map",
         "runtime.js.map",
+        "vendor.js.map",
         "content.js.map"
       ],
       "matches": ["https://chat.openai.com/*"]

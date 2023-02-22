@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-5">
+    <h2>Manage Prompts</h2>
+  </div>
+  <div class="col-md-7">
+    <button id="add" mat-raised-button color="primary" (click)="add()">
+      Create
+    </button>
+  </div>
+</div>
+
+<table mat-table [dataSource]="prompts" class="mat-elevation-z8">
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element">{{element.type}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let element">{{element.title}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="body">
+    <th mat-header-cell *matHeaderCellDef>Body</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.body.substring(0, 45)}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="listenVoice">
+    <th mat-header-cell *matHeaderCellDef>ListenVoice</th>
+    <td mat-cell *matCellDef="let element">{{element.listenVoice}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="speakVoice">
+    <th mat-header-cell *matHeaderCellDef>speakVoice</th>
+    <td mat-cell *matCellDef="let element">{{element.speakVoice}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="edit(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="delete(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns;"
+    (click)="selectedRow = row"
+    [ngClass]="{ 'highlight': row === selectedRow }"
+  ></tr>
+</table>

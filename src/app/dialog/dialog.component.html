@@ -1,0 +1,69 @@
+<mat-dialog-content class="mat-typography">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <h1>{{data.title}}</h1>
+      </div>
+      <div class="col-md-4">
+        <div class="raised-row">
+          <button mat-raised-button color="primary" (click)="done()">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container *ngIf="type === 'new'">
+          <ng-container [ngTemplateOutlet]="newInstall"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="type === 'upgrade'">
+          <ng-container *ngTemplateOutlet="upgrade"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5"></div>
+      <div class="col-md-4">
+        <div class="raised-row">
+          <button mat-raised-button color="primary" (click)="done()">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<ng-template #newInstall>
+  <h1>Welcome to Leah</h1>
+  <p>Leah Leah helps you improve your language skills by talking to ChatGPT</p>
+  <p>Out of the box, you can listen and talk to ChatGPT in English</p>
+  <p>
+    But
+    <strong>
+      the real power of Leah is in customizing your experience by choosing a
+      prompt and a language</strong
+    >
+  </p>
+  <p>
+    Click on Settings
+    <mat-icon mat-list-icon>settings</mat-icon>
+    to choose a prompt and a language
+  </p>
+</ng-template>
+
+<ng-template #upgrade>
+  <h1>Version 0.3</h1>
+  <p>You can now create, update and delete your own prompts</p>
+  <p>Click on Settings to create your own prompts</p>
+  <p>
+    Remember
+    <strong>
+      the real power of Leah is in customizing your experience by choosing a
+      prompt and a language
+    </strong>
+  </p>
+</ng-template>
