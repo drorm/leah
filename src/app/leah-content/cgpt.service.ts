@@ -96,25 +96,22 @@ export class CgptService {
       if (numElements > this.totalMessages) {
         const response = pageElements.pop();
         text = response?.innerText;
-        this.logger.info('found an element:', text);
+        this.logger.info('found an element:', ii, text);
         if (text && text.length > 0) {
           const lines = text.split('\n');
           let sentences = lines.filter((line) => line.length > 0); //
           // if there's more than one sentence,
           // and we haven't spoken it yet, we'll speak the last one
-          if (sentences.length > 1 && sentences.length > this.sentencesSpoken) {
-            const currentSentence = sentences[sentences.length - 2];
-            await this.speakSentence(currentSentence, leah);
-          }
-          this.sentencesSpoken = sentences.length;
+          await this.speakSentences(text, leah, false);
           submit = await $('textarea ~ button:enabled');
           if (submit.length > 0) {
             this.logger.info('got submit');
             if (response) {
-              await this.speakSentence(sentences[sentences.length - 1], leah);
-              this.totalMessages = pageElements.length;
               text = response.innerText;
+              await this.speakSentences(text, leah, true);
+              this.totalMessages = pageElements.length;
               this.logger.info('text:', text);
+              this.sentencesSpoken = 0;
               return text; // Found it
             }
           }
@@ -127,12 +124,53 @@ export class CgptService {
   }
 
   /**
+   * Speak sentences that haven't been spoken yet.
+   * We don't speak a sentence until we see the next one, since
+   * we can't tell the end of a sentence, until we see the new line.
+   * @param text the text to speak
+   * @param leah the leah object
+   * @param finished if the bot is finished speaking
+   *
+   */
+
+  async speakSentences(text: string, leah: any, finished = false) {
+    if (!text) {
+      return;
+    }
+
+    // Convert to sentences
+    const lines = text.split('\n');
+    let sentences = lines.filter((line) => line.length > 0);
+
+    this.logger.info('sentences:', sentences);
+    let start = this.sentencesSpoken;
+    let end = sentences.length;
+    // If we're not finished, we want to speak the previous sentence
+    if (!finished) {
+      start++; // we start with the next sentence
+    }
+
+    this.logger.info('speaking sentencess:', start, end);
+    for (let ii = start; ii < end; ii++) {
+      // If we're not finished, we want to speak the previous sentence
+      let sentence = sentences[ii - 1];
+      if (finished) {
+        sentence = sentences[ii];
+      }
+      this.logger.info('speak sentence:', sentence, ii);
+      await this.speakSentence(sentence, leah);
+      this.sentencesSpoken = ii;
+    }
+    this.logger.info('after speak sentences:', this.sentencesSpoken);
+  }
+
+  /**
    * Speak a single sentence
    * @param sentence
    */
   async speakSentence(sentence: string, leah: any) {
     const lang = this.languageDetect.detect(sentence, 1)[0][0];
-    this.logger.info(
+    this.logger.debug(
       // We want to have a new sentence beore we speak the previous one
       'speak sentence:',
       sentence,
