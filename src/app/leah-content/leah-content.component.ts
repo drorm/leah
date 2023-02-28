@@ -124,7 +124,6 @@ export class LeahContentComponent {
       await this.speak(paragraph);
     } else {
       await this.speechService.stop();
-      await this.speak('goodbye');
     }
   }
 
