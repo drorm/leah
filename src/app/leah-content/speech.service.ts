@@ -64,7 +64,7 @@ export class SpeechService {
       window.speechSynthesis.onvoiceschanged = function () {
         const availableVoices = window.speechSynthesis.getVoices();
         that.voices = availableVoices;
-        that.logger.debug('availableVoices', availableVoices);
+        that.logger.info('Available Speak Voices', availableVoices);
         resolve(availableVoices);
       };
     });
