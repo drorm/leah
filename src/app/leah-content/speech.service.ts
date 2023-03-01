@@ -65,6 +65,27 @@ export class SpeechService {
         const availableVoices = window.speechSynthesis.getVoices();
         that.voices = availableVoices;
         that.logger.info('Available Speak Voices', availableVoices);
+        if (that.userSettings.newInstall) {
+          const languages = navigator.languages;
+          // We have the list of tts voices in that.voices
+          // and the list of languages in languages
+          // We want to find the first voice that matches the first language
+          // and set that as the default voice
+          // First pass see if we can find exact match
+          for (const language of languages) {
+            const foundVoice = that.voices.filter(function (
+              voice: SpeechSynthesisVoice
+            ) {
+              return voice.lang.toUpperCase() === language.toUpperCase();
+            })[0];
+            if (foundVoice) {
+              that.userSettings.voice = foundVoice.lang;
+              that.settingsService.setUserSetting('voice', foundVoice.lang);
+              break;
+            }
+          }
+        }
+
         resolve(availableVoices);
       };
     });
