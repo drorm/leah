@@ -92,11 +92,11 @@ export class CgptService {
       const pageElements = $("div[class*='text-base']").toArray();
       const numElements = pageElements.length;
       // first let's find the new element
-      this.logger.info('totalMessages', this.totalMessages);
+      this.logger.debug('totalMessages', this.totalMessages);
       if (numElements > this.totalMessages) {
         const response = pageElements.pop();
         text = response?.innerText;
-        this.logger.info('found an element:', ii, text);
+        this.logger.debug('found an element:', ii, text);
         if (text && text.length > 0) {
           const lines = text.split('\n');
           let sentences = lines.filter((line) => line.length > 0); //
@@ -105,12 +105,11 @@ export class CgptService {
           await this.speakSentences(text, leah, false);
           submit = await $('textarea ~ button:enabled');
           if (submit.length > 0) {
-            this.logger.info('got submit');
+            this.logger.debug('bot done speaking');
             if (response) {
               text = response.innerText;
               await this.speakSentences(text, leah, true);
               this.totalMessages = pageElements.length;
-              this.logger.info('text:', text);
               this.sentencesSpoken = 0;
               return text; // Found it
             }
@@ -142,7 +141,6 @@ export class CgptService {
     const lines = text.split('\n');
     let sentences = lines.filter((line) => line.length > 0);
 
-    this.logger.info('sentences:', sentences);
     let start = this.sentencesSpoken;
     let end = sentences.length;
     // If we're not finished, we want to speak the previous sentence
@@ -150,18 +148,20 @@ export class CgptService {
       start++; // we start with the next sentence
     }
 
-    this.logger.info('speaking sentencess:', start, end);
+    this.logger.debug(
+      `sentences: ${sentences} start: ${start} ${end} end finished: ${finished}`
+    );
     for (let ii = start; ii < end; ii++) {
-      // If we're not finished, we want to speak the previous sentence
+      // Unless we're finished, we want to speak the previous sentence
       let sentence = sentences[ii - 1];
       if (finished) {
         sentence = sentences[ii];
       }
-      this.logger.info('speak sentence:', sentence, ii);
+      this.logger.debug('speak sentence:', sentence, ii);
       await this.speakSentence(sentence, leah);
       this.sentencesSpoken = ii;
     }
-    this.logger.info('after speak sentences:', this.sentencesSpoken);
+    this.logger.debug('after speak sentences:', this.sentencesSpoken);
   }
 
   /**
