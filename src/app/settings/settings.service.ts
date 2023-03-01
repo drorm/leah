@@ -4,6 +4,7 @@ import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { LocalStorageService } from 'ngx-webstorage';
 import { defaultPrompts } from './prompts';
 import * as version from '../version';
+import { langs } from './listenLangs';
 
 const SETTINGS = 'Leah-settings';
 
@@ -35,6 +36,7 @@ export class SettingsService {
   public static readonly PROMPT_NONE = 'none';
   currentVersion = version.vars.version;
   versionStatus: VersionStatus = VersionStatus.NOCHANGE;
+  newInstall = false;
 
   userSettings: any = {
     readSentence: true,
@@ -82,11 +84,13 @@ export class SettingsService {
     } else {
       // This is the first time the app has been run
       this.versionStatus = VersionStatus.NEW;
+      this.newInstall = true;
     }
     this.logger.debug('version status:', this.versionStatus);
     this.userSettings.version = this.currentVersion;
     this.storage.store(SETTINGS, this.userSettings); // In case it's the first time
     this.logger.debug('new settings:', this.userSettings);
+    this.setDefaultVoiceRecognition();
   }
 
   setUserSetting(key: string, value: any) {
@@ -100,5 +104,29 @@ export class SettingsService {
 
   getVersionStatus(): VersionStatus {
     return this.versionStatus;
+  }
+
+  /**
+   * Set the default voice recognition language
+   * Based on the settings in the browser
+   * if we also have it as a voice recognition language
+   */
+  setDefaultVoiceRecognition() {
+    const browserLangs = navigator.languages;
+    // We have the list of voice recognition languages in langs
+    // and the list of browser languages in browserLangs
+    // We want to find the first voice that matches the first language
+    // and set that as the default voice recognition language
+    for (let ii = 0; ii < browserLangs.length; ii++) {
+      const lang = browserLangs[ii];
+      for (let jj = 0; jj < langs.length; jj++) {
+        const langEntry = langs[jj];
+        if (langEntry[1] === lang) {
+          // this.userSettings.listenLang = lang;
+          this.setUserSetting('listenLang', lang);
+          return;
+        }
+      }
+    }
   }
 }
