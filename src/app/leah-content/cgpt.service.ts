@@ -66,7 +66,9 @@ export class CgptService {
     await this.getTextArea();
     // Send the message
     $('textarea.m-0').val(message);
-    const submit = await $('textarea ~ button:enabled');
+    const submit = await $('textarea ~ button');
+    submit.prop('disabled', false);
+
     if (submit) {
       this.logger.debug('found submit');
       submit.click();
