@@ -1,4 +1,5 @@
 export const vars = {
-  version: '0.3',
-  released: 'Sun Feb 19 02:11:04 PM PST 2023',
-};
+   version: '0.3.1',
+   released: 'Thu Apr  6 04:49:11 PM PDT 2023'
+   };
+
